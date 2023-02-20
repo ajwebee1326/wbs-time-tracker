@@ -17,7 +17,7 @@ if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
     $end_date =  $db->santize($_POST['end_date']);
     $notes = $db->santize($_POST['notes']);
 
-    $sql= "INSERT INTO `tbl_ajay`(`project_name`, `description`, `start_date`, `end_date`, `notes`)
+    $sql= "INSERT INTO `tbl_task`(`project_name`, `description`, `start_date`, `end_date`, `notes`)
      VALUES ('$project_name','$description','$start_date','$end_date','$notes')";
 
     if($db->insert($sql)){
@@ -81,7 +81,7 @@ if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
                                     <tbody>
                                         
                                     <?php 
-                                        $sql= "SELECT * FROM tbl_ajay";
+                                        $sql= "SELECT * FROM tbl_task";
                                             $tasks = $db->select($sql);
 
                                             $sr_no =1; 

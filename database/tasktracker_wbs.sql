@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2023 at 06:53 AM
+-- Generation Time: Feb 20, 2023 at 08:50 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -20,52 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `tasktracker_wbs`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_ajay`
---
-
-CREATE TABLE `tbl_ajay` (
-  `id` int(20) NOT NULL,
-  `project_name` varchar(30) NOT NULL,
-  `description` text NOT NULL,
-  `start_date` datetime NOT NULL,
-  `end_date` datetime NOT NULL,
-  `notes` varchar(50) NOT NULL,
-  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
-  `date_updated` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tbl_ajay`
---
-
-INSERT INTO `tbl_ajay` (`id`, `project_name`, `description`, `start_date`, `end_date`, `notes`, `date_created`, `date_updated`) VALUES
-(1, 'Charde Bullock', 'Non anim maxime volu', '2016-04-02 13:11:00', '2002-06-22 20:34:00', 'Tempor suscipit Nam ', '2023-02-17 17:36:41', '2023-02-17 17:36:41'),
-(2, 'Acma', 'acma description', '2023-08-19 10:00:00', '2023-08-19 19:00:00', 'This notes are completed ', '2023-02-17 17:39:27', '2023-02-17 17:39:27'),
-(3, 'Daniel Acosta', 'Et et rerum consequa', '2022-06-23 00:08:00', '2012-03-12 21:22:00', 'Do excepturi sit qui', '2023-02-17 17:43:40', '2023-02-17 17:43:40'),
-(4, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 17:45:03', '2023-02-17 17:45:03'),
-(5, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 17:45:22', '2023-02-17 17:45:22'),
-(6, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 17:53:35', '2023-02-17 17:53:35'),
-(7, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 17:55:44', '2023-02-17 17:55:44'),
-(8, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:00:54', '2023-02-17 18:00:54'),
-(9, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:04:28', '2023-02-17 18:04:28'),
-(10, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:05:18', '2023-02-17 18:05:18'),
-(11, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:05:51', '2023-02-17 18:05:51'),
-(12, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:10:40', '2023-02-17 18:10:40'),
-(13, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:12:31', '2023-02-17 18:12:31'),
-(14, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:12:59', '2023-02-17 18:12:59'),
-(15, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:13:13', '2023-02-17 18:13:13'),
-(16, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:14:21', '2023-02-17 18:14:21'),
-(17, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:14:35', '2023-02-17 18:14:35'),
-(18, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:39:28', '2023-02-17 18:39:28'),
-(19, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:40:40', '2023-02-17 18:40:40'),
-(20, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:41:35', '2023-02-17 18:41:35'),
-(21, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:44:23', '2023-02-17 18:44:23'),
-(22, 'Odette Higgins', 'Sint aut veritatis d', '2021-04-02 06:43:00', '1979-04-11 03:00:00', 'Consequat Fuga Bla', '2023-02-17 18:46:37', '2023-02-17 18:46:37'),
-(23, 'Makup Secret', 'alsjdlkjas', '2023-08-19 10:00:00', '2023-08-19 19:00:00', 'jhfhjgf', '2023-02-20 11:11:31', '2023-02-20 11:11:31');
 
 -- --------------------------------------------------------
 
@@ -128,15 +82,34 @@ INSERT INTO `tbl_employee` (`id`, `emp_name`, `emp_designation`, `emp_email`, `e
 (37, 'Krishna Lamani', 'Graphic Design Intern', 'krishna.webeesocial@gmail.com', 9359963647, 'Design', '1234', ''),
 (38, 'Shabana Khatoon', 'HR & Admin Executive', 'hr@webeesocial.com', 9625335880, 'HR', '1234', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_task`
+--
+
+CREATE TABLE `tbl_task` (
+  `id` int(20) NOT NULL,
+  `project_name` varchar(30) NOT NULL,
+  `description` text NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `notes` varchar(50) NOT NULL,
+  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `date_updated` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_task`
+--
+
+INSERT INTO `tbl_task` (`id`, `project_name`, `description`, `start_date`, `end_date`, `notes`, `date_created`, `date_updated`) VALUES
+(1, 'Charde Bullock', 'Non anim maxime volu', '2016-04-02 13:11:00', '2002-06-22 20:34:00', 'Tempor suscipit Nam ', '2023-02-17 17:36:41', '2023-02-17 17:36:41'),
+(24, 'Makup Secret', 'makeup done ', '2023-08-19 10:00:00', '2023-08-19 19:00:00', 'worked on front page ', '2023-02-20 13:19:31', '2023-02-20 13:19:31');
+
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `tbl_ajay`
---
-ALTER TABLE `tbl_ajay`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tbl_employee`
@@ -145,20 +118,26 @@ ALTER TABLE `tbl_employee`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indexes for table `tbl_task`
 --
+ALTER TABLE `tbl_task`
+  ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for table `tbl_ajay`
+-- AUTO_INCREMENT for dumped tables
 --
-ALTER TABLE `tbl_ajay`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `tbl_employee`
 --
 ALTER TABLE `tbl_employee`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT for table `tbl_task`
+--
+ALTER TABLE `tbl_task`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
