@@ -1,0 +1,17 @@
+{
+    "name": "admin/wbs-time-tracker",
+    "autoload": {
+        "psr-4": {
+            "Admin\\WbsTimeTracker\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ajay",
+            "email": "ajay.kumar@webeesocial.com"
+        }
+    ],
+    "require": {
+        "psr/log": "^3.0"
+    }
+}

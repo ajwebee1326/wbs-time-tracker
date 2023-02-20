@@ -1,0 +1,111 @@
+:root {
+  --navy_blue: #2381c3;
+  --primary: #07395c;
+  --secondary: #2a2e3f;
+  --orange: #fb8412;
+  --yellow: #fff21c;
+  --green: #009744;
+  --light: #dbe3e9;
+  --light-blue: #e8f3ff;
+  --table_head_light-blue: rgb(155 248 240 / 40%);
+  --table_head_light-yellow: rgb(241 237 199 / 40%);
+  --table_light-blue: #9bf8f0;
+  --table_light-yellow: #f1edc7;
+  --light_purple: #9ca6ec;
+  --light_sky: #35bae6;
+  --light_green: #ebf9ff;
+  --light_blue: #f1f5fe;
+}
+.bg-primary {
+  background-color: var(--primary) !important;
+}
+.bg-light {
+  background-color: var(--light) !important;
+}
+.text-primary {
+  color: var(--primary) !important;
+}
+.text-orange {
+  color: var(--orange) !important;
+}
+.text-secondary {
+  color: var(--secondary) !important;
+}
+.text-light_purple {
+  color: var(--light_purple) !important;
+}
+.text-light_sky {
+  color: var(--light_sky) !important;
+}
+.bg-light_green {
+  background-color: var(--light_green) !important;
+}
+.bg-light_blue {
+  background-color: var(--light_blue) !important;
+}
+/*---- sidebar ----*/
+body[data-sidebar="dark"] .vertical-menu {
+  background: var(--primary) !important;
+}
+body[data-sidebar="dark"] .navbar-brand-box {
+  background: var(--primary) !important;
+}
+/*---- Card ----*/
+.card-title {
+  color: var(--primary);
+}
+/*--- button ----*/
+.btn-primary {
+  background-color: var(--primary) !important;
+}
+/*---- form ----*/
+.form-select:hover,.form-select:focus,.form-select:visited{
+  box-shadow: none !important;
+  outline: none !important;
+}
+label {
+  display: inline-flex !important;
+  gap: 10px;
+  align-items: center;
+}
+.admin-login {
+  max-width: 380px;
+  background: #fff;
+  padding: 20px 30px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  border-radius: 15px;
+}
+.admin-login .form-title h4 {
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 20px 0px 30px;
+  color: var(--primary);
+}
+.admin-login .form-input {
+  padding-bottom: 30px; 
+}
+.admin-login .form-input input {
+   border-radius: 10px; 
+   height: 40px;
+}
+
+.admin-login .form-input label {
+  display: block;
+  font-size: 16px;
+  color: var(--secondary);
+  margin-bottom: 5px;
+}
+.admin-login .form-input .btn-primary{
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 10px;
+}
+
+.btn-primary:hover{
+  background-color: var(--green) !important;
+  border: 1px solid var(--green) !important;
+}
