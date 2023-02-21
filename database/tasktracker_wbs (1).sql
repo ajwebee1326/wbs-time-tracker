@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2023 at 08:50 AM
+-- Generation Time: Feb 21, 2023 at 07:22 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -90,6 +90,7 @@ INSERT INTO `tbl_employee` (`id`, `emp_name`, `emp_designation`, `emp_email`, `e
 
 CREATE TABLE `tbl_task` (
   `id` int(20) NOT NULL,
+  `emp_id` int(10) NOT NULL,
   `project_name` varchar(30) NOT NULL,
   `description` text NOT NULL,
   `start_date` datetime NOT NULL,
@@ -103,9 +104,9 @@ CREATE TABLE `tbl_task` (
 -- Dumping data for table `tbl_task`
 --
 
-INSERT INTO `tbl_task` (`id`, `project_name`, `description`, `start_date`, `end_date`, `notes`, `date_created`, `date_updated`) VALUES
-(1, 'Charde Bullock', 'Non anim maxime volu', '2016-04-02 13:11:00', '2002-06-22 20:34:00', 'Tempor suscipit Nam ', '2023-02-17 17:36:41', '2023-02-17 17:36:41'),
-(24, 'Makup Secret', 'makeup done ', '2023-08-19 10:00:00', '2023-08-19 19:00:00', 'worked on front page ', '2023-02-20 13:19:31', '2023-02-20 13:19:31');
+INSERT INTO `tbl_task` (`id`, `emp_id`, `project_name`, `description`, `start_date`, `end_date`, `notes`, `date_created`, `date_updated`) VALUES
+(32, 16, 'Theodore Wynn', 'Asperiores veniam n', '1985-09-17 04:16:00', '2007-10-05 12:25:00', 'Voluptas omnis earum', '2023-02-20 22:30:11', '2023-02-20 22:30:11'),
+(39, 16, 'Makup Secret', 'sakdflksaasdfasdf', '2023-08-19 10:00:00', '2023-08-19 19:00:00', 'asdfasdf', '2023-02-21 11:40:41', '2023-02-21 11:40:41');
 
 --
 -- Indexes for dumped tables
@@ -137,7 +138,7 @@ ALTER TABLE `tbl_employee`
 -- AUTO_INCREMENT for table `tbl_task`
 --
 ALTER TABLE `tbl_task`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

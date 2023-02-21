@@ -1,4 +1,7 @@
 <?php 
+
+
+session_start();
 //ini_set('display_errors', 0);
 //include( __DIR__."/../config.php" );
 ?>
@@ -67,6 +70,8 @@
                             <i class="fa fa-fw fa-bars"></i>
                         </button>
                     </div>
+
+                    <h4><p><?php echo $_SESSION['name']?></p></h4>
                     <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,5 +85,7 @@
                     </div>
                 </div>
             </header>
+
+           
 
            
