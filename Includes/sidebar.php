@@ -12,7 +12,7 @@
 
                 <?php if(is_admin()): ?>
                 <li>
-                    <a href="timesheet.php" class="waves-effect">
+                    <a href="employees.php" class="waves-effect">
                         <i class="bx bx-user"></i>
                         <span key="t-chat">Employees</span>
                     </a>
