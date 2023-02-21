@@ -1,7 +1,5 @@
 <?php 
 
-session_start();
-
 include 'includes/header.php';
 include 'includes/functions.php';
 include 'includes/DB.php';
@@ -103,10 +101,10 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
                                     <?php 
 
                                             $emp_id = $_SESSION['emp_id'];
-                                        $sql= "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id" ;
+                                            $sql= "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id" ;
                                             $tasks = $db->select($sql);
-
                                             $sr_no =1; 
+                                            if($tasks):
                                             foreach ($tasks as $task) { ?>
                                             <tr>
 
@@ -118,13 +116,13 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
                                                 <td> <?php echo $task['end_date']  ?> </td>
                                                 <td> <?php echo $task['notes']  ?> </td>
                                                 <td>
-                                                <a  href="viewtimesheet.php?id=<?php echo $task['id']?>&action=view"><button class="btn btn-warning">View</button></a>
-                                                <a onclick=""><button class="btn btn-primary edit_btn">Edit</button></a>
+                                                    <a  href="viewtimesheet.php?id=<?php echo $task['id']?>&action=view"><button class="btn btn-warning">View</button></a>
+                                                    <button class="btn btn-primary edit_task" data-task='<?php echo json_encode($task);?>'>Edit</button>
                                                     <a onclick="return confirm('Do you want to delete this task')" href="timesheet.php?id=<?php echo $task['id']?>&action=delete"><button class="btn btn-danger">Delete</button></a>
                                                 </td>
                                             </tr>
                                                
-                                           <?php $sr_no ++; }  ?>
+                                           <?php $sr_no ++; } endif;  ?>
                                     </tbody>
                                 </table>
 
@@ -189,6 +187,7 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
     </div>
   </div>
 </div>
+</div>
 
 <!-- 
 ////////////////Update modal//////////// -->
@@ -233,6 +232,7 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
     </div>
   </div>
 </div>
+</div>
 
 <?php
 include 'includes/footer.php';
@@ -243,22 +243,13 @@ include 'includes/footer.php';
     $(document).ready(function() {
         $('#emp_timesheet').DataTable();
 
-
-
-        $(document).on('click', ".edit_btn", function(){
-   
-            $('#editmodal').modal('show');
-
+        $(".edit_task").click(function(){
+            let task = $(this).attr('data-task');
+            task = JSON.parse(task);
+            console.log(task.project_name);
+            $("#editmodal").modal('show');
         });
-
-
     });
-
-    
-    
-
-
-   
 
 
     function task_form_validate(){ 
