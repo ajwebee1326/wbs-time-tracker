@@ -67,13 +67,17 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0 font-size-18">Task List</h4>
-                        <div class="col-4 text-center">
+                        <div class="col-6 text-center">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"><b>+ Add New Project</b></button>
+                                data-bs-target="#exampleModal"><b>+ Add New Project</b>
+                            </button>
+                            <a href="?filter=day"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'day' ? 'disabled' : '' ?>><b>Today</b></button></a>
+                            <a href="?filter=week"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'week' ? 'disabled' : '' ?>><b>Last Week</b></button></a>
+                            <a href="?filter=month"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'month' ? 'disabled' : '' ?>><b>Last Month</b></button></a>
                         </div>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item active">Data Tables</li>
+                                <li class="breadcrumb-item active">Task List</li>
                             </ol>
                         </div>
 
@@ -99,15 +103,32 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
                                 </thead>
                                 <tbody>
 
-                                    <?php 
+                                <?php 
+                                $filter = false;
 
-                                            $emp_id = $_SESSION['emp_id'];
-                                            $sql= "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id" ;
-                                            $tasks = $db->select($sql);
-                                            $sr_no =1; 
-                                            if($tasks):
-                                            foreach ($tasks as $task) { ?>
-                                    <tr>
+                                $emp_id = $_SESSION['emp_id'];
+
+                                if(isset($_GET['filter']) && $_GET['filter'] != '' && $_GET['filter'] != null){
+                                    $filter_req = strtoupper($_GET['filter']);
+                                    $filter = "`start_date` > DATE_SUB(NOW(), INTERVAL 1 $filter_req)";
+                                }
+
+                                if(isset($_GET['from']) && $_GET['from'] != '' && $_GET['from'] != null && isset($_GET['to']) && $_GET['to'] != null && $_GET['to']!=""){
+                                    $from = $_GET['from'];
+                                    $to = $_GET['to'];
+                                    $filter = "start_date >= '$from' AND start_date <= '$to'";
+                                }
+
+                                if($filter){
+                                    $sql= "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id AND $filter" ;
+                                }else{
+                                    $sql= "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id" ;
+                                }
+                                $tasks = $db->select($sql);
+                                $sr_no =1; 
+                                if($tasks):
+                                foreach ($tasks as $task) { ?>
+                                    <tr id="task_<?php echo $task['id']?>">
 
                                         <?php $taskid = $task['id'] ?>
                                         <td>
@@ -133,9 +154,7 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
                                                 data-task='<?php echo json_encode($task);?>'>View</button>
                                             <button class="btn btn-primary edit_task"
                                                 data-task='<?php echo json_encode($task);?>'>Edit</button>
-                                            <a onclick="return confirm('Do you want to delete this task')"
-                                                href="timesheet.php?id=<?php echo $task['id']?>&action=delete"><button
-                                                    class="btn btn-danger">Delete</button></a>
+                                                <button class="btn btn-danger" onclick="delete_task(<?php echo $task['id']?>)">Delete</button>
                                         </td>
                                     </tr>
 
@@ -340,33 +359,25 @@ include 'includes/footer.php';
 
             });
 
-            $('#update_task').click(function () {
-
+            $('#task_update_form').submit(function (e) {
+                e.preventDefault();
                 var id = $('#hidden_task_id').val();
-                var projectname = $('#eproject_name').val();
+                var project_name = $('#eproject_name').val();
                 var description = $('#edescription').val();
                 var start_date = $('#estart_date').val();
                 var end_date = $('#eend_date').val();
                 var notes = $('#enotes').val();
+                let action =  'update_task';
 
-                alert(notes);
-                $.ajax({
-                    url: 'ajax.php',
-                    method: 'POST',
-                    dataType: "json",
-                    data: { id: id, projectname: project_name, descriptoin: description, start_data: start_date, end_date: end_date, notes: notes },
-
-                    success: function (response) {
-                        if (response.code == 1) {
-                            alert('data updated');
-                        } else {
-                            alert('something went wrong');
-                        }
-                    },
-                    error: function () {
-                        alert('Invalid request');
+                $.post('ajax.php',{id,project_name,description,start_date,end_date,notes,action},function(data){
+                    data = JSON.parse(data);
+                    if(data.code==1){
+                        alert('Task updated successfully');
+                        location.reload();
+                    }else{
+                        alert('Something went wrong');
                     }
-                });
+                })
             })
 
             function task_form_validate() {
@@ -453,6 +464,17 @@ include 'includes/footer.php';
                 });
             }
 
+            function delete_task(id){
+                let action = 'delete_task';
+                $.post('ajax.php',{id,action},function(data){
+                    data = JSON.parse(data);
+                    if(data.code==1){
+                        $('#task_'+id).hide('slow');
+                    }else{
+                        alert('Something went wrong');
+                    }
+                })
+            }
 
 
         </script>
