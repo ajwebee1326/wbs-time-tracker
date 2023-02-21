@@ -37,6 +37,24 @@ class DB {
         }else{          
             return false;
         }
+       }
+
+        public function update($sql){
+        $result = $this->conn->query($sql);
+        if($result){
+            return true;
+        }else{          
+            return false;
+        }
+    }
+
+    public function delete($sql){
+        $result = $this->conn->query($sql);
+        if($result){
+            return true;
+        }else{          
+            return false;
+        }
     }
 
 }

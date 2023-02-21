@@ -12,10 +12,20 @@ if (isset($_POST['email'])) {
     $sql = "SELECT * FROM tbl_employee WHERE emp_email = '$email' AND emp_pwd = '$password'";
    
        
-    if ($db->select($sql)) {
+       $employee = $db->select($sql); 
+       $employee = mysqli_fetch_array($employee);
 
+        if($employee){
+            
+        $_SESSION['emp_id']= $employee['id'];
+        $_SESSION['name']= $employee['emp_name'];
+        $_SESSION['designation']= $employee['emp_designation'];
+        $_SESSION['email']= $employee['emp_email'];
+        $_SESSION['mobile']= $employee['emp_mob'];
+        $_SESSION['dept']= $employee['emp_dept'];
+        $_SESSION['rm']= $employee['emp_rm'];
         
-        $_SESSION['email']= $email; 
+
         
         if(isset($_SESSION['email'])){
             header("location: index.php");
