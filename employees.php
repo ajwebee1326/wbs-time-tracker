@@ -51,11 +51,10 @@ $db = new DB();
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
-                                            <th>Project Name</th>
-                                            <th>Description</th>
-                                            <th>Start Date & time</th>
-                                            <th>End Date & time</th>
-                                            <th>Notes</th>
+                                            <th>Name</th>
+                                            <th>Designation</th>
+                                            <th>Email</th>
+                                            <th>Task <small>Today</small></th>
                                             <th>Actions</th>                                            
                                         </tr>
                                     </thead>
@@ -64,23 +63,34 @@ $db = new DB();
 
                                             $emp_id = $_SESSION['emp_id'];
                                             $sql= "SELECT * FROM tbl_employee ";
-                                            $employee = $db->select($sql);
+                                            $employees = $db->select($sql);
                                             $sr_no =1; 
-                                            if($tasks):
-                                            foreach ($tasks as $task) { ?>
+                                            if($employees):
+                                            foreach ($employees as $employee) { ?>
                                             <tr>
-
-                                            <?php $taskid = $task['id'] ?>
                                                 <td> <?php echo $sr_no  ?> </td>
-                                                <td> <?php echo $task['project_name']  ?> </td>
-                                                <td> <?php echo $task['description']  ?> </td>
-                                                <td> <?php echo $task['start_date']  ?> </td>
-                                                <td> <?php echo $task['end_date']  ?> </td>
-                                                <td> <?php echo $task['notes']  ?> </td>
+                                                <td> <?php echo $employee['emp_name']  ?> </td>
+                                                <td> <?php echo $employee['emp_designation']  ?> </td>
+                                                <td> <?php echo $employee['emp_email']  ?> </td>
+                                                <td> 
+                                                    <?php
+                                                        $emp_id = $employee['id'];
+                                                        $sql= "SELECT * FROM tbl_task WHERE emp_id='$emp_id' AND start_date >= CURRENT_DATE AND start_date < CURRENT_DATE + INTERVAL 1 DAY;";
+                                                        $tasks = $db->select($sql);
+                                                        if($tasks):
+                                                            foreach ($tasks as $task) { 
+                                                                echo "<b>".$task['project_name']."</b> <br> ";
+                                                                echo $task['description'].'<br>';
+                                                                echo $task['start_date'].'<br>';
+                                                                echo $task['end_date'].'<br>';
+                                                                ?>
+                                                                
+                                                            <?php }
+                                                        endif;
+                                                    ?>
+                                                </td>
                                                 <td>
-                                                    <a  href="viewtimesheet.php?id=<?php echo $task['id']?>&action=view"><button class="btn btn-warning">View</button></a>
-                                                    <button class="btn btn-primary edit_task" data-task='<?php echo json_encode($task);?>'>Edit</button>
-                                                    <a onclick="return confirm('Do you want to delete this task')" href="timesheet.php?id=<?php echo $task['id']?>&action=delete"><button class="btn btn-danger">Delete</button></a>
+                                                    <a  href="view-report.php?id=<?php echo $employee['id']?>&action=view"><button class="btn btn-warning">View</button></a>
                                                 </td>
                                             </tr>
                                            <?php $sr_no ++; } endif;  ?>
@@ -102,5 +112,5 @@ include 'includes/footer.php';
 
 
 <script>
-
+$('#emp_timesheet').DataTable();
 </script>
