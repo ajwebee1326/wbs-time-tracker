@@ -57,6 +57,11 @@ class DB {
         }
     }
 
+    public function query($sql){
+        $result = $this->conn->query($sql);
+        return $result;
+    }
+
 }
 
 ?>
