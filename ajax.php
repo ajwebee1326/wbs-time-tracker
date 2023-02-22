@@ -23,7 +23,7 @@ if(isset($_POST['project_name']) &&  $_POST['action'] == 'update_task' ){
     if($db->update($sql)){
         $return_array =  array(
             'code'=>1,
-            'message'=>'Updated'
+            'message'=>'Task updated successfully'
         );
         
     }else{
@@ -47,7 +47,7 @@ if(isset($_POST['id']) &&  $_POST['action'] == 'delete_task' ){
     if($db->delete($sql)){
         $return_array =  array(
             'code'=>1,
-            'message'=>'Deleted'
+            'message'=>'Deleted Successfully'
         );
         
     }else{
@@ -60,3 +60,28 @@ if(isset($_POST['id']) &&  $_POST['action'] == 'delete_task' ){
     echo json_encode($return_array);exit;
     
 }
+
+// if(isset($_POST['from_date'], $_POST['to_date'])){
+
+//     $sql ="SELECT * FROM tbl_task WHERE `start_date` BETWEEN ' ".$_POST["from_date"]." ' AND ' ".$_POST["to_date"]." ' ";
+
+//       $data=$db->select($sql);
+      
+//       if ($data->num_rows() > 0) {
+//             $data= $data->result_array();
+
+//             $return_array = array(
+//                 'code' => 1,
+//                 'message' =>'Success',
+//                 'data' => $data
+//             );
+//         } else {
+//             $return_array = array(
+//                 'code'=> 0,
+//                 'message'=>'No data available'
+//             );
+//         }
+//         echo json_encode($return_array);
+//         exit;
+      
+// }

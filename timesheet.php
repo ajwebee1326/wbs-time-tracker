@@ -24,6 +24,7 @@ if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
     }else{
         $mg = "Something went wrong ";
     }
+
 }
 
 // To delete the task from database
@@ -67,14 +68,29 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0 font-size-18">Task List</h4>
-                        <div class="col-6 text-center">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"><b>+ Add New Project</b>
-                            </button>
-                            <a href="?filter=day"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'day' ? 'disabled' : '' ?>><b>Today</b></button></a>
-                            <a href="?filter=week"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'week' ? 'disabled' : '' ?>><b>Last Week</b></button></a>
-                            <a href="?filter=month"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'month' ? 'disabled' : '' ?>><b>Last Month</b></button></a>
-                        </div>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"><b>+ Add New Project</b>
+                                </button>
+                                
+                                <a href="?filter="><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == '' ? 'disabled' : '' ?>><b>All</b></button></a>
+                                <a href="?filter=day"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'day' ? 'disabled' : '' ?>><b>Today</b></button></a>
+                                <a href="?filter=week"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'week' ? 'disabled' : '' ?>><b>Last Week</b></button></a>
+                                <a href="?filter=month"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'month' ? 'disabled' : '' ?>><b>Last Month</b></button></a>
+
+                                <!-- ////Date range  -->
+                            
+                            </div>
+                            <div class="col-md-6 mx-auto mt-3 text-center">
+                                    <form action="" class="d-flex justify-content-between gap-3" >
+                                    
+                                    <input type="text" id="from" name="from" class="form-control" placeholder="From Date">
+                                    <input type="text" id="to" name="to" class= "form-control" placeholder ="To Date">
+                                    <input type ="submit" id="filterdaterange" name="filterdaterange" class=" btn btn-primary" value="Filter">
+                                    </form>
+                                </div>
+                            </div>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item active">Task List</li>
@@ -89,6 +105,9 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+                        <div id="task_message" class="alert alert-dismissable d-none">
+                            <div class="message"></div>
+                         </div>
                             <table id="emp_timesheet" class="table table-bordered dt-responsive w-100">
                                 <thead>
                                     <tr>
@@ -115,7 +134,8 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
 
                                 if(isset($_GET['from']) && $_GET['from'] != '' && $_GET['from'] != null && isset($_GET['to']) && $_GET['to'] != null && $_GET['to']!=""){
                                     $from = $_GET['from'];
-                                    $to = $_GET['to'];
+                                   
+                                    $to = $_GET['to'];                                   
                                     $filter = "start_date >= '$from' AND start_date <= '$to'";
                                 }
 
@@ -131,24 +151,12 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
                                     <tr id="task_<?php echo $task['id']?>">
 
                                         <?php $taskid = $task['id'] ?>
-                                        <td>
-                                            <?php echo $sr_no  ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $task['project_name']  ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $task['description']  ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $task['start_date']  ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $task['end_date']  ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $task['notes']  ?>
-                                        </td>
+                                        <td><?php echo $sr_no  ?></td>
+                                        <td><?php echo $task['project_name']  ?></td>
+                                        <td><?php echo $task['description']  ?></td>
+                                        <td><?php echo $task['start_date']  ?></td>
+                                        <td><?php echo $task['end_date']  ?></td>
+                                        <td><?php echo $task['notes']  ?></td>
                                         <td>
                                             <button class="btn btn-secondary view_task"
                                                 data-task='<?php echo json_encode($task);?>'>View</button>
@@ -326,6 +334,16 @@ include 'includes/footer.php';
 
         <script>
             $(document).ready(function () {
+
+                $.datepicker.setDefaults({
+                    dateFormat: 'yy-mm-dd',
+                    showButtonPanel: true
+                });
+
+                $('#from').datepicker();
+                $('#to').datepicker();
+               
+
                 $('#emp_timesheet').DataTable();
 
                 $(".view_task").click(function () {
@@ -340,9 +358,6 @@ include 'includes/footer.php';
                     $("#vnotes").val(task.notes);
                     $("#exampleviewModal").modal('show');
                 });
-
-
-
 
                 $(".edit_task").click(function () {
                     let task = $(this).attr('data-task');
@@ -372,10 +387,13 @@ include 'includes/footer.php';
                 $.post('ajax.php',{id,project_name,description,start_date,end_date,notes,action},function(data){
                     data = JSON.parse(data);
                     if(data.code==1){
-                        alert('Task updated successfully');
+                        $('#task_message').removeClass('alert-danger d-none').addClass('alert-success');
+                        $('#task_message .message').html(data.message);
+                        
                         location.reload();
                     }else{
-                        alert('Something went wrong');
+                    $('#edit_brand_msg').removeClass('alert-success d-none').addClass('alert-danger');
+                    $('#edit_brand_msg .message').html(data.message);
                     }
                 })
             })
@@ -470,11 +488,16 @@ include 'includes/footer.php';
                     data = JSON.parse(data);
                     if(data.code==1){
                         $('#task_'+id).hide('slow');
+                        $('#task_message').removeClass('alert-danger d-none').addClass('alert-success');
+                        $('#task_message .message').html(data.message);
+                       
+
                     }else{
-                        alert('Something went wrong');
+                        $('#task_message').removeClass('alert-success d-none').addClass('alert-danger');
+                        $('#task_message .message').html(data.message);
                     }
                 })
             }
 
-
+           
         </script>

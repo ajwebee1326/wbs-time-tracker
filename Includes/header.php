@@ -20,6 +20,12 @@ session_start();
         <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
+
+        <!--jqyer date picker --> 
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+
+
         <!-- Responsive datatable examples -->
         <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />     
         <!-- Icons Css -->
@@ -67,7 +73,7 @@ session_start();
                         </button>
                     </div>
 
-                    <h4><p><?php echo $_SESSION['name']?></p></h4>
+                    <h4 class="m-auto"><p class="mb-0">Welcome, <?php echo $_SESSION['name']?></p></h4>
                     <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
