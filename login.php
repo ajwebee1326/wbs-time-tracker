@@ -10,6 +10,8 @@ if (isset($_POST['email'])) {
     $sql = "SELECT * FROM tbl_employee WHERE emp_email = '$email' AND emp_pwd = '$password'";
     $employee = $db->select($sql);
     $employee = mysqli_fetch_array($employee);
+   
+
 
     if ($employee) {
         $_SESSION['emp_id'] = $employee['id'];

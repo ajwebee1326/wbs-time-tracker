@@ -7,11 +7,16 @@ include 'includes/header.php';
 include 'includes/functions.php';
 include 'includes/DB.php';
 
+if(!is_admin()){
+    exit;
+}
+
 checkAuth();
 $msg = false;
 $db = new DB();
 
 $emp_id = $_GET['id'];
+
 
 ?>
 
@@ -36,10 +41,22 @@ $emp_id = $_GET['id'];
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0 font-size-18">Task List</h4>
                         <div class="col-6 text-center">
-                            <a href="?filter=day"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'day' ? 'disabled' : '' ?>><b>Today</b></button></a>
-                            <a href="?filter=week"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'week' ? 'disabled' : '' ?>><b>Last Week</b></button></a>
-                            <a href="?filter=month"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'month' ? 'disabled' : '' ?>><b>Last Month</b></button></a>
+                        <a href="?id=<?php echo $emp_id ?>&filter"><button type="button" class="btn btn-primary"><b>All</b></button></a>
+                            <a href="?id=<?php echo $emp_id ?>&filter=day"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'day' ? 'disabled' : '' ?>><b>Today</b></button></a>
+                            <a href="?id=<?php echo $emp_id ?>&filter=week"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'week' ? 'disabled' : '' ?>><b>Last Week</b></button></a>
+                            <a href="?id=<?php echo $emp_id ?>&filter=month"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'month' ? 'disabled' : '' ?>><b>Last Month</b></button></a>
                         </div>
+                        <?php if ($msg) : ?>
+                            <div class="text-center mb-3"><?php echo $msg; ?></div>
+                        <?php endif; ?>
+                        <div class="col-md-6 mx-auto mt-3 text-center">
+                            <form action="" class="d-flex justify-content-between gap-3" >
+                                <input type="text" id="from" name="from" class="form-control" placeholder="From Date">
+                                <input type="text" id="to" name="to" class= "form-control" placeholder ="To Date">
+                                <button type="submit" class="btn btn-primary">Filter </button>
+                            </form>
+                        </div>
+                            </div>
                         <div class="col-2 text-center">
                             Total Hours : 12 Hours
                         </div>
@@ -54,9 +71,38 @@ $emp_id = $_GET['id'];
             </div>
             <div class="row">
             <?php
+            $filter = false;
+
+            if(isset($_GET['filter'])&& $_GET['filter'] !='' && $_GET['filter'] != NULL){
+                $filter_request = strtoupper($_GET['filter']);
+              // $filter = "`start_date` > DATE_SUB(NOW(), INTERVAL 1 $filter_request)";
+                 $filter =  "`start_date` >= CURRENT_DATE AND start_date < CURRENT_DATE + INTERVAL 1 $filter_request";
+                
+            }
+
+ 
+            if(isset($_GET['from'])&& $_GET['from'] != '' && $_GET['from'] != null && isset($_GET['to']) && $_GET['to'] !='' && $_GET['to'] !=null){
+                
+                $from = $_GET['from'];
+                $to = $_GET['to'];
+               
+
+                $filter = " start_date >= '$from' AND start_date <= '$to'";
+            }else{
+                $msg = 'Please select the date range';
+            }
+
+            if($filter){
+            
+                $tasks = "SELECT * FROM `tbl_task` WHERE `emp_id` = '$emp_id' AND $filter";
+            }else{
                 $tasks = "SELECT * FROM `tbl_task` WHERE `emp_id` = '$emp_id'";
+            }
+           
                 $tasks = $db->query($tasks);
                 $i = 1;
+
+                if($tasks):
                 while($task = $tasks->fetch_assoc()){
             ?>
                 <div class="col-xl-3 col-sm-3">
@@ -100,7 +146,7 @@ $emp_id = $_GET['id'];
                         </div>
                     </div>
                 </div>
-            <?php } ?>
+            <?php } endif; ?>
 
             </div>
         </div>
@@ -114,4 +160,13 @@ include 'includes/footer.php';
 
 <script>
     $('#emp_timesheet').DataTable();
+
+    $.datepicker.setDefaults({
+                    dateFormat: 'yy-mm-dd',
+                    showButtonPanel: true
+                });
+
+                $('#from').datepicker();
+                $('#to').datepicker();
+               
 </script>

@@ -29,22 +29,22 @@ if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
 
 // To delete the task from database
 
-if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
+// if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
 
-    $id = $_GET['id'];
-    $sql = "DELETE FROM `tbl_task` WHERE id = $id " ;
+//     $id = $_GET['id'];
+//     $sql = "DELETE FROM `tbl_task` WHERE id = $id " ;
 
-    if($db->delete($sql)){
+//     if($db->delete($sql)){
 
-        $msg = "Task removed successfully";
-        header('Location: timesheet.php');
-    }else{
-        $msg = "Something went wrong";
-    }
+//         $msg = "Task removed successfully";
+//         header('Location: timesheet.php');
+//     }else{
+//         $msg = "Something went wrong";
+//     }
 
-}else{
-    $msg = 'Invalid Request';
-}
+// }else{
+//     $msg = 'Invalid Request';
+// }
 
 ?>
 
@@ -82,12 +82,16 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
                                 <!-- ////Date range  -->
                             
                             </div>
+                            <?php if ($msg) : ?>
+                                 <div class="text-center mb-3"><?php echo $msg; ?></div>
+                            <?php endif; ?>
                             <div class="col-md-6 mx-auto mt-3 text-center">
-                                    <form action="" class="d-flex justify-content-between gap-3" >
+                                    <form action="" method="" class="d-flex justify-content-between gap-3" >
                                     
                                     <input type="text" id="from" name="from" class="form-control" placeholder="From Date">
                                     <input type="text" id="to" name="to" class= "form-control" placeholder ="To Date">
-                                    <input type ="submit" id="filterdaterange" name="filterdaterange" class=" btn btn-primary" value="Filter">
+                                    <!-- <input type ="submit" id="filterdaterange" name="filterdaterange" class=" btn btn-primary" value="Filter"> -->
+                                    <button type="submit" class="btn btn-primary">Filter </button>
                                     </form>
                                 </div>
                             </div>
@@ -127,16 +131,22 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
 
                                 $emp_id = $_SESSION['emp_id'];
 
-                                if(isset($_GET['filter']) && $_GET['filter'] != '' && $_GET['filter'] != null){
+                                if(isset($_GET['filter']) && $_GET['filter'] != "" && $_GET['filter'] != null){
                                     $filter_req = strtoupper($_GET['filter']);
                                     $filter = "`start_date` > DATE_SUB(NOW(), INTERVAL 1 $filter_req)";
                                 }
 
-                                if(isset($_GET['from']) && $_GET['from'] != '' && $_GET['from'] != null && isset($_GET['to']) && $_GET['to'] != null && $_GET['to']!=""){
+                               
+
+                                if(isset($_GET['from']) && ($_GET['from'] != "") && ($_GET['from'] != null) && isset($_GET['to']) && ($_GET['to'] != null) && ($_GET['to'] !="")){
                                     $from = $_GET['from'];
                                    
+                                   
+
                                     $to = $_GET['to'];                                   
                                     $filter = "start_date >= '$from' AND start_date <= '$to'";
+                                }else{
+                                    $msg = 'Please select the date range';  
                                 }
 
                                 if($filter){
@@ -160,7 +170,7 @@ if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
                                         <td>
                                             <button class="btn btn-secondary view_task"
                                                 data-task='<?php echo json_encode($task);?>'>View</button>
-                                            <button class="btn btn-primary edit_task"
+                                            <button class="btn btn-primary edit_task" 
                                                 data-task='<?php echo json_encode($task);?>'>Edit</button>
                                                 <button class="btn btn-danger" onclick="delete_task(<?php echo $task['id']?>)">Delete</button>
                                         </td>
@@ -344,7 +354,7 @@ include 'includes/footer.php';
                 $('#to').datepicker();
                
 
-                $('#emp_timesheet').DataTable();
+            $('#emp_timesheet').DataTable();
 
                 $(".view_task").click(function () {
                     let task = $(this).attr('data-task');
@@ -396,7 +406,7 @@ include 'includes/footer.php';
                     $('#edit_brand_msg .message').html(data.message);
                     }
                 })
-            })
+            });
 
             function task_form_validate() {
                 $('#task_add_form').validate({
