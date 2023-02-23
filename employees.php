@@ -75,7 +75,7 @@ $db = new DB();
                                                 <td> 
                                                     <?php
                                                         $emp_id = $employee['id'];
-                                                        $sql= "SELECT * FROM tbl_task WHERE emp_id='$emp_id' AND start_date >= CURRENT_DATE AND start_date < CURRENT_DATE + INTERVAL 1 DAY;";
+                                                        $sql= "SELECT * FROM tbl_task WHERE emp_id='$emp_id' AND start_date >= CURRENT_DATE AND start_date < CURRENT_DATE + INTERVAL 1 DAY";
                                                         $tasks = $db->select($sql);
                                                         if($tasks):
                                                             foreach ($tasks as $task) { 

@@ -6,6 +6,7 @@ class DB {
     private $user = 'root';
     private $pass = '';
     private $dbname = 'tasktracker_wbs';
+    public $last_insert_id;
 
     public function __construct() {
         $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->dbname);
@@ -33,6 +34,7 @@ class DB {
         $result = $this->conn->query($sql);
         if($result){
             $last_insert_id = $this->conn->insert_id;
+            $this->last_insert_id = $last_insert_id;
             return $last_insert_id;
         }else{          
             return false;

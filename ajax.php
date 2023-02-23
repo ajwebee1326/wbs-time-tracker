@@ -8,34 +8,85 @@ if(!isset($_SESSION['email'])){
 
 $msg = false;
 $db = new DB();
-
-if(isset($_POST['project_name']) &&  $_POST['action'] == 'update_task' ){
-   
-    $id = $_POST['id'];
-    $projectname = $_POST['project_name'];
+// add task
+if(isset($_POST['action']) && $_POST['action']=='create_task'){
+    $client_name = $_POST['client_name'];
     $description = $_POST['description'];
-    $start_date = $_POST['start_date'];
-    $end_date = $_POST['end_date'];
-    $notes = $_POST['notes'];
+    $hours = $_POST['hours'];
+    $minutes = $_POST['minutes'];
+    $emp_id = $_SESSION['emp_id'];
 
-    $sql= "UPDATE `tbl_task` SET `project_name`='$projectname',`description`='$description',`start_date`='$start_date',`end_date`='$end_date',`notes`='$notes' WHERE id='$id'";
+    $sql = "INSERT INTO `tbl_task`(`emp_id`,`client_name`, `description`, `hours`, `minutes`) VALUES ('$emp_id','$client_name','$description','$hours','$minutes')";
+    if($db->insert($sql)){
+        $task = $db->query("SELECT * FROM tbl_task WHERE id='".$db->last_insert_id."'");
+        $task = mysqli_fetch_assoc($task);
 
-    if($db->update($sql)){
+       $tr = '<tr id="task_'.$db->last_insert_id.'">
+                    <td>'.$db->last_insert_id.'</td>
+                    <td>'.$client_name.'</td>
+                    <td>'.$description.'</td>
+                    <td>'.$hours.'</td>
+                    <td>'.$minutes.'</td>
+                    <td>
+                        <button class="btn btn-secondary view_task">View</button>
+                        <button class="btn btn-primary edit_task" data-task='. json_encode($task,true) .' >Edit</button>
+                        <a href="javascript:void(0)" class="btn btn-danger" onclick="delete_task('.$db->last_insert_id.')">Delete</a>
+                    </td>
+                </tr>';
         $return_array =  array(
             'code'=>1,
-            'message'=>'Updated'
+            'message'=>'Task Created',
+            'html'=>$tr
         );
-        
-    }else{
+        }else{
+            $return_array =  array(
+                'code'=>0,
+                'message'=>'Something went wrong'
+            );
+        }
+        echo json_encode($return_array);exit;
+    }
+
+// update task
+if(isset($_POST['action']) && $_POST['action']=='update_task'){
+    $id = $_POST['id'];
+    $client_name = $_POST['client_name'];
+    $description = $_POST['description'];
+    $hours = $_POST['hours'];
+    $minutes = $_POST['minutes'];
+    $emp_id = $_SESSION['emp_id'];
+    $task = $db->query("SELECT * FROM tbl_task WHERE id='".$id."'");
+    $task = mysqli_fetch_assoc($task);
+
+    $sql = "UPDATE `tbl_task` SET `client_name`='$client_name',`description`='$description',`hours`='$hours',`minutes`='$minutes' WHERE id='$id'";
+    if($db->update($sql)){
+        $tr = '<tr id="task_'.$id.'">
+                    <td>'.$id.'</td>
+                    <td>'.$client_name.'</td>
+                    <td>'.$description.'</td>
+                    <td>'.$hours.'</td>
+                    <td>'.$minutes.'</td>
+                    <td>
+                        <button class="btn btn-secondary view_task">View</button>
+                        <button class="btn btn-primary edit_task" data-task='. json_encode($task,true) .' >Edit</button>
+                        <a href="javascript:void(0)" class="btn btn-danger" onclick="delete_task('.$id.')">Delete</a>
+                    </td>
+                </tr>';
+        $return_array =  array(
+            'code'=>1,
+            'message'=>'Task Updated',
+            'html'=>$tr
+        );
+    }
+    else{
         $return_array =  array(
             'code'=>0,
             'message'=>'Something went wrong'
         );
     }
-
     echo json_encode($return_array);exit;
-    
 }
+        
 
 // delete task
 
@@ -60,3 +111,4 @@ if(isset($_POST['id']) &&  $_POST['action'] == 'delete_task' ){
     echo json_encode($return_array);exit;
     
 }
+
