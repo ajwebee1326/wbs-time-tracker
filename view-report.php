@@ -132,10 +132,10 @@ $emp_id = $_GET['id'];
                                 $office_start = $work_start_time->max($office_start_time);
                                 $office_end = $work_end_time->min($office_end_time);
                                 $hours_worked = $office_start->diffInHours($office_end);
-                                echo "Hours worked during office hours: <b>{$hours_worked} hours</b>";
+                                // echo "Hours worked during office hours: <b>{$hours_worked} hours</b>";
                             ?>
                         </div>
-                        <div class="card-footer bg-transparent border-top">
+                        <!-- <div class="card-footer bg-transparent border-top">
                             <div class="contact-links d-flex font-size-20">
                                 <div class="flex-fill">
                                     <a href="http://localhost/wbs/webeesite/slide/edit/1"><i class="bx bx-edit"></i></a>
@@ -147,7 +147,7 @@ $emp_id = $_GET['id'];
                                     <a href="http://localhost/wbs/webeesite/slide/change_status/1/0"><button class="btn btn-danger btn-sm">Deactivate</button></a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             <?php } endif; ?>

@@ -175,8 +175,8 @@ if($filter){
     
     // $prhours['mm']=$prhours['mm']/60;
 
-    ?>
 
+    ?>
                                 <h5>Production Hours-
                                     <?php echo $prhours['hours'];?> hrs
                                     <?php echo $prhours['mm'] ?> minutes
