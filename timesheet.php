@@ -95,7 +95,8 @@ $filter = false;
                                     <form action="" method="" class="d-flex justify-content-between gap-3">
                                         <input type="text" id="from" name="from" class="form-control"
                                             placeholder="From Date" autocomplete="off">
-                                        <input type="text" id="to" name="to" class="form-control" placeholder="To Date" autocomplete="off">
+                                        <input type="text" id="to" name="to" class="form-control" placeholder="To Date"
+                                            autocomplete="off">
                                         <button type="submit" class="btn btn-primary">Filter </button>
                                     </form>
 
@@ -111,6 +112,10 @@ $filter = false;
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
+
+                            <div id="add_task_message" class="alert alert-dismissable d-none">
+                                <div class="message"></div>
+                            </div>
                                 <form action="" method="POST" id="task_form">
                                     <div>
                                         <label for="">Client Name</label>
@@ -173,14 +178,12 @@ if($filter){
         $prhours = mysqli_fetch_array($production_hours); 
     }   
     
-    // $prhours['mm']=$prhours['mm']/60;
-
 
     ?>
-                                <h5>Production Hours-
-                                    <?php echo $prhours['hours'];?> hrs
-                                    <?php echo $prhours['mm'] ?> minutes
-                                </h5>
+                <h5>Production Hours-
+                    <?php echo $prhours['hours'];?> hrs
+                    <?php echo $prhours['mm'] ?> minutes
+                </h5>
 
                             </div>
 
@@ -242,7 +245,9 @@ if($filter){
                                             <!-- <td>
                                                 <?php echo $taskid  ?>
                                             </td> -->
-                                            <td><?php echo $task['date_created']?></td>
+                                            <td>
+                                                <?php echo $task['date_created']?>
+                                            </td>
                                             <td>
                                                 <?php echo $task['client_name']  ?>
                                             </td>
@@ -312,7 +317,13 @@ if($filter){
                     if (action == 'create_task') {
                         $('#emp_timesheet tbody').append(data.html);
                         console.log(data.html);
-                        location.reload();
+                        
+                        $('#add_task_message').removeClass('alert-danger d-none').addClass('alert-success');
+                            $('#add_task_message .message').html("Task added successfully");
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1e3);
+                       
                     } else {
                         $('#task_' + id).replaceWith(data.html);
                         $(".action_btn").html("Add");
