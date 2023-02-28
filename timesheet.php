@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include 'includes/header.php';
 include 'includes/functions.php';
@@ -8,46 +8,8 @@ checkAuth();
 $msg = false;
 $db = new DB();
 
-$emp_id=$_SESSION['emp_id'];
+$emp_id = $_SESSION['emp_id'];
 $filter = false;
-// if((isset($_POST['project_name']))&&(!empty($_POST['project_name']))){
-
-//     $emp_id = $_SESSION['emp_id'];
-//     $project_name = $db->santize($_POST['project_name']);
-//     $description  = $db->santize($_POST['description']);
-//     $date_created = $db->santize($_POST['date_created']);
-//     $end_date =  $db->santize($_POST['end_date']);
-//     $notes = $db->santize($_POST['notes']);
-
-//     $sql= "INSERT INTO `tbl_task`(`emp_id`,`project_name`, `description`, `date_created`, `end_date`, `notes`)
-//      VALUES ('$emp_id','$project_name','$description','$date_created','$end_date','$notes')";
-
-//     if($db->insert($sql)){
-//         $msg = "Task Added successfully ";
-//     }else{
-//         $mg = "Something went wrong ";
-//     }
-
-// }
-
-// To delete the task from database
-
-// if(isset($_GET['action'])&& $_GET['action']=='delete' && !empty($_GET['id'])) {
-
-//     $id = $_GET['id'];
-//     $sql = "DELETE FROM `tbl_task` WHERE id = $id " ;
-
-//     if($db->delete($sql)){
-
-//         $msg = "Task removed successfully";
-//         header('Location: timesheet.php');
-//     }else{
-//         $msg = "Something went wrong";
-//     }
-
-// }else{
-//     $msg = 'Invalid Request';
-// }
 
 ?>
 
@@ -77,17 +39,17 @@ $filter = false;
 
                             </div>
                             <?php if ($msg) : ?>
-                            <div class="text-center mb-3">
-                                <?php echo $msg; ?>
-                            </div>
+                                <div class="text-center mb-3">
+                                    <?php echo $msg; ?>
+                                </div>
                             <?php endif; ?>
                             <div class="col-md-6    ">
                                 <div class="d-flex gap-3">
 
                                     <!-- <a href="?filter="><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == '' ? 'disabled' : '' ?>><b>All</b></button></a> -->
                                     <a href="?filter=day"><button type="button" class="btn btn-primary" <?php echo
-                                            isset($_GET['filter']) && $_GET['filter']=='day' ? 'disabled' : ''
-                                            ?>><b>Today</b></button></a>
+                                                                                                        isset($_GET['filter']) && $_GET['filter'] == 'day' ? 'disabled' : ''
+                                                                                                        ?>><b>Today</b></button></a>
                                     <!-- <a href="?filter=week"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'week' ? 'disabled' : '' ?>><b>Last Week</b></button></a>
                                  <a href="?filter=month"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'month' ? 'disabled' : '' ?>><b>Last Month</b></button></a> -->
 
@@ -119,25 +81,21 @@ $filter = false;
                                 <form action="" method="POST" id="task_form">
                                     <div>
                                         <label for="">Client Name</label>
-                                        <input type="text" name="client_name" id="client_name" class="form-control"
-                                            placeholder="Client Name">
+                                        <input type="text" name="client_name" id="client_name" class="form-control" placeholder="Client Name">
                                     </div>
                                     <div class=" mt-2">
                                         <label for="">Task Description</label>
                                         <!-- <input type="text" name="description" id="description" class="form-control" placeholder="Description" -->
-                                        <textarea name="description" id="description" class="form-control"
-                                            placeholder="Description"></textarea>
+                                        <textarea name="description" id="description" class="form-control" placeholder="Description"></textarea>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <div class="mt-2">
                                             <label for="">Hours</label>
-                                            <input type="number" name="hours" id="hours" class="form-control"
-                                                placeholder="Hours" maxlength="1">
+                                            <input type="number" name="hours" id="hours" class="form-control" placeholder="Hours" maxlength="1">
                                         </div>
                                         <div class=" mt-2">
                                             <label for="">Minutes</label>
-                                            <input type="number" name="minutes" id="minutes" class="form-control"
-                                                placeholder="Minutes" maxlength="2">
+                                            <input type="number" name="minutes" id="minutes" class="form-control" placeholder="Minutes" maxlength="2">
                                         </div>
                                     </div>
                                     <input type="hidden" name="action" id="action" value="create_task">
@@ -148,42 +106,44 @@ $filter = false;
                                 </form>
                             </div>
                             <div class="production-hours mt-2">
-                                <?php 
+                                <?php
 
-if(isset($_GET['filter']) && $_GET['filter'] != "" && $_GET['filter'] != null){
-    $filter_req = strtoupper($_GET['filter']);
-    $filter = "`date_created` > DATE_SUB(NOW(), INTERVAL 1 $filter_req)";
-    
-}
+                                if (isset($_GET['filter']) && $_GET['filter'] != "" && $_GET['filter'] != null) {
+                                    $filter_req = strtoupper($_GET['filter']);
+                                    $filter = "`date_created` > DATE_SUB(NOW(), INTERVAL 1 $filter_req)";
+                                }
 
-if(isset($_GET['from']) && ($_GET['from'] != "") && ($_GET['from'] != null) && isset($_GET['to']) && ($_GET['to'] != null) && ($_GET['to'] !="")){
-    $from = $_GET['from'];
-    $to = $_GET['to']; 
-    
-    $filter = "date_created >= '$from' AND date_created <= '$to'";
-}else{
-    $msg = 'Please select the date range';  
-}
+                                if (isset($_GET['from']) && ($_GET['from'] != "") && ($_GET['from'] != null) && isset($_GET['to']) && ($_GET['to'] != null) && ($_GET['to'] != "")) {
+                                    $from = $_GET['from'];
+                                    $to = $_GET['to'];
 
-if($filter){
+                                    $filter = "date_created >= '$from' AND date_created <= '$to'";
+                                } else {
+                                    $msg = 'Please select the date range';
+                                }
+
+                                if ($filter) {
 
 
-    $sql= "SELECT SUM(hours) as hours, SUM(minutes) as mm FROM `tbl_task` WHERE emp_id = $emp_id AND $filter"; 
-    $production_hours = $db->select($sql);
-    $prhours = mysqli_fetch_array($production_hours); 
-                           
-    } else {
-        $sql= "SELECT SUM(hours) as hours, SUM(minutes) as mm FROM `tbl_task` WHERE emp_id = $emp_id"; 
-        $production_hours = $db->select($sql);
-        $prhours = mysqli_fetch_array($production_hours); 
-    }   
-    
+                                    $sql = "SELECT SUM(hours) as hours, SUM(minutes) as mm FROM `tbl_task` WHERE emp_id = $emp_id AND $filter";
+                                    $production_hours = $db->select($sql);
+                                    $prhours = mysqli_fetch_array($production_hours);
+                                } else {
+                                    $sql = "SELECT SUM(hours) as hours, SUM(minutes) as mm FROM `tbl_task` WHERE emp_id = $emp_id";
+                                    $production_hours = $db->select($sql);
+                                    $prhours = mysqli_fetch_array($production_hours);
+                                }
 
-    ?>
-                <h5>Production Hours-
-                    <?php echo $prhours['hours'];?> hrs
-                    <?php echo $prhours['mm'] ?> minutes
-                </h5>
+
+                                $prhours['hours'] = floor($prhours['hours'] + ($prhours['mm'] / 60));
+                                $prhours['mm'] = $prhours['mm'] % 60;
+
+                                ?>
+
+                                <h5>Production Hours-
+                                    <?php echo $prhours['hours']; ?> hrs
+                                    <?php echo $prhours['mm'] ?> minutes
+                                </h5>
 
                             </div>
 
@@ -214,65 +174,59 @@ if($filter){
                                         <?php $filter = false;
                                         $emp_id = $_SESSION['emp_id'];
 
-                                            if(isset($_GET['filter']) && $_GET['filter'] != "" && $_GET['filter'] != null){
-                                                $filter_req = strtoupper($_GET['filter']);
-                                                $filter = "`date_created` > DATE_SUB(NOW(), INTERVAL 1 $filter_req)";
-                                                //$filter =  "`date_created` >= CURRENT_DATE AND date_created < CURRENT_DATE + INTERVAL 1 $filter_req";
-                                            
-                                            }
+                                        if (isset($_GET['filter']) && $_GET['filter'] != "" && $_GET['filter'] != null) {
+                                            $filter_req = strtoupper($_GET['filter']);
+                                            $filter = "`date_created` > DATE_SUB(NOW(), INTERVAL 1 $filter_req)";
+                                            //$filter =  "`date_created` >= CURRENT_DATE AND date_created < CURRENT_DATE + INTERVAL 1 $filter_req";
 
-                                            if(isset($_GET['from']) && ($_GET['from'] != "") && ($_GET['from'] != null) && isset($_GET['to']) && ($_GET['to'] != null) && ($_GET['to'] !="")){
-                                                $from = $_GET['from'];
-                                                $to = $_GET['to']; 
-                                                
-                                                $filter = "date_created >= '$from' AND date_created <= '$to'";
-                                            }else{
-                                                $msg = 'Please select the date range';  
-                                            }
+                                        }
 
-                                          
-                                            if($filter){
-                                                $sql= "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id AND $filter" ;
-                                            }else{
-                                                $sql= "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id AND date_created >= CURRENT_DATE AND date_created < CURRENT_DATE + INTERVAL 1 DAY" ;
-                                            }
+                                        if (isset($_GET['from']) && ($_GET['from'] != "") && ($_GET['from'] != null) && isset($_GET['to']) && ($_GET['to'] != null) && ($_GET['to'] != "")) {
+                                            $from = $_GET['from'];
+                                            $to = $_GET['to'];
+
+                                            $filter = "date_created >= '$from' AND date_created <= '$to'";
+                                        } else {
+                                            $msg = 'Please select the date range';
+                                        }
+
+                                        $curr_date =   date("Y-m-d");
+                                        if ($filter) {
+                                            $sql = "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id AND $filter";
+                                        } else {
+                                            $sql = "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id AND date_created >= CURRENT_DATE AND date_created < CURRENT_DATE + INTERVAL 1 DAY";
+                                        }
                                         $tasks = $db->select($sql);
-                                        if($tasks):
-                                        foreach ($tasks as $task) { ?>
-                                        <tr id="task_<?php echo $task['id']?>">
+                                        if ($tasks) :
+                                            foreach ($tasks as $task) { ?>
+                                                <tr id="task_<?php echo $task['id'] ?>">
 
-                                            <?php $taskid = $task['id'] ?>
-                                            <!-- <td>
+                                                    <?php $taskid = $task['id'] ?>
+                                                    <!-- <td>
                                                 <?php echo $taskid  ?>
                                             </td> -->
-                                            <td>
-                                                <?php echo $task['date_created']?>
-                                            </td>
-                                            <td>
-                                                <?php echo $task['client_name']  ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $task['description']  ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $task['hours']  ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $task['minutes']  ?>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-secondary view_task"><span
-                                                        class="fa fa-eye"></span></button>
-                                                <button class="btn btn-primary edit_task"
-                                                    data-task='<?php echo json_encode($task);?>'><span
-                                                        class="fa fa-pencil"></span></button>
-                                                <button class="btn btn-danger"
-                                                    onclick="delete_task(<?php echo $task['id']?>)"><span
-                                                        class="fa fa-trash"></span> </button>
-                                            </td>
-                                        </tr>
+                                                    <td><?php echo $task['date_created'] ?></td>
+                                                    <td>
+                                                        <?php echo $task['client_name']  ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $task['description']  ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $task['hours']  ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $task['minutes']  ?>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-secondary view_task"><span class="fa fa-eye"></span></button>
+                                                        <button class="btn btn-primary edit_task" data-task='<?php echo json_encode($task); ?>'><span class="fa fa-pencil"></span></button>
+                                                        <button class="btn btn-danger" onclick="delete_task(<?php echo $task['id'] ?>)"><span class="fa fa-trash"></span> </button>
+                                                    </td>
+                                                </tr>
 
-                                        <?php  } endif;  ?>
+                                        <?php  }
+                                        endif;  ?>
                                     </tbody>
                                 </table>
 
@@ -291,7 +245,7 @@ if($filter){
 
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#emp_timesheet').DataTable();
         });
 
@@ -303,7 +257,7 @@ if($filter){
         $('#from').datepicker();
         $('#to').datepicker();
 
-        $("#task_form").submit(function (e) {
+        $("#task_form").submit(function(e) {
             e.preventDefault();
             let client_name = $('#client_name').val();
             let description = $('#description').val();
@@ -311,7 +265,14 @@ if($filter){
             let minutes = $('#minutes').val();
             let action = $('#action').val();
             let id = $('#task_id').val();
-            $.post('ajax.php', { client_name, description, hours, minutes, action, id }, function (data) {
+            $.post('ajax.php', {
+                client_name,
+                description,
+                hours,
+                minutes,
+                action,
+                id
+            }, function(data) {
                 data = JSON.parse(data);
                 if (data.code == 1) {
                     if (action == 'create_task') {
@@ -339,7 +300,10 @@ if($filter){
 
         function delete_task(id) {
             let action = 'delete_task';
-            $.post('ajax.php', { id, action }, function (data) {
+            $.post('ajax.php', {
+                id,
+                action
+            }, function(data) {
                 data = JSON.parse(data);
                 if (data.code == 1) {
                     $('#task_' + id).hide('slow');
@@ -350,7 +314,7 @@ if($filter){
         }
 
 
-        $(document).on('click', '.edit_task', function (e) {
+        $(document).on('click', '.edit_task', function(e) {
             e.preventDefault();
             let task = $(this).data('task');
             $('#client_name').val(task.client_name);
@@ -362,5 +326,4 @@ if($filter){
             $('#action').html('update_task');
             $(".action_btn").html("Update");
         });
-
     </script>
