@@ -8,12 +8,10 @@ if (isset($_POST['email'])) {
     $email = $db->santize($_POST['email']);
     $password = $db->santize($_POST['password']);
     $sql = "SELECT * FROM tbl_employee WHERE emp_email = '$email' AND emp_pwd = '$password'";
+   
     $employee = $db->select($sql);
     $employee = mysqli_fetch_array($employee);
-   
-
-
-    if ($employee) {
+      if ($employee) {
         $_SESSION['emp_id'] = $employee['id'];
         $_SESSION['name'] = $employee['emp_name'];
         $_SESSION['designation'] = $employee['emp_designation'];
@@ -28,10 +26,13 @@ if (isset($_POST['email'])) {
         } else {
             header("location: login.php");
         }
-    } else {
-        $msg = "Invalid email or password";
+        } else {
+            $msg = "Invalid email or password";
+        }
     }
-}
+   
+   
+    
 ?>
 
 <!doctype html>
@@ -77,7 +78,7 @@ if (isset($_POST['email'])) {
                             </div>
                             <div class="form-input">
                                 <label for="password">Password</label>
-                                <input type="password" id="password" name="password" class="form-control" value="12345">
+                                <input type="password" id="password" name="password" class="form-control" value="1234">
                             </div>
                             <div class="form-input">
                                 <button type="submit" class="btn btn-primary btn-block btn-lg w-100">Login</button>

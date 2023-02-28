@@ -30,6 +30,7 @@ session_start();
         <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />     
         <!-- Icons Css -->
         <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- App Css-->
         <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
         <!-- toastr css -->
@@ -63,7 +64,7 @@ session_start();
                                     <img src="assets/images/.png" alt="" height="22">
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="assets/images/webeelogo.png" alt="" height="40">
+                                    <img src="https://webeesocial.ca/wp-content/uploads/2022/12/logowhite2.png" alt="" height="40">
                                 </span>
                             </a>
                         </div>

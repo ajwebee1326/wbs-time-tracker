@@ -19,12 +19,12 @@
                 </li>
                 <?php endif; ?>
 
-                <li>
+                <!-- <li>
                     <a href="javascript: void(0);" class="waves-effect">
                         <i class="bx bx-list-ul"></i>
                         <span key="t-dashboards">Overview</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="timesheet.php" class="waves-effect">

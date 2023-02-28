@@ -18,6 +18,7 @@ $db = new DB();
 $emp_id = $_GET['id'];
 
 
+
 ?>
 
 
@@ -43,18 +44,18 @@ $emp_id = $_GET['id'];
                         <div class="col-6 text-center">
                         <a href="?id=<?php echo $emp_id ?>&filter"><button type="button" class="btn btn-primary"><b>All</b></button></a>
                             <a href="?id=<?php echo $emp_id ?>&filter=day"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'day' ? 'disabled' : '' ?>><b>Today</b></button></a>
-                            <a href="?id=<?php echo $emp_id ?>&filter=week"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'week' ? 'disabled' : '' ?>><b>Last Week</b></button></a>
-                            <a href="?id=<?php echo $emp_id ?>&filter=month"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'month' ? 'disabled' : '' ?>><b>Last Month</b></button></a>
+                            <!-- <a href="?id=<?php echo $emp_id ?>&filter=week"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'week' ? 'disabled' : '' ?>><b>Last Week</b></button></a>
+                            <a href="?id=<?php echo $emp_id ?>&filter=month"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'month' ? 'disabled' : '' ?>><b>Last Month</b></button></a> -->
                         </div>
                         <?php if ($msg) : ?>
                             <div class="text-center mb-3"><?php echo $msg; ?></div>
                         <?php endif; ?>
                         <div class="col-md-6 mx-auto mt-3 text-center">
-                            <form action="" class="d-flex justify-content-between gap-3" >
+                            <!-- <form action="" class="d-flex justify-content-between gap-3" >
                                 <input type="text" id="from" name="from" class="form-control" placeholder="From Date">
                                 <input type="text" id="to" name="to" class= "form-control" placeholder ="To Date">
                                 <button type="submit" class="btn btn-primary">Filter </button>
-                            </form>
+                            </form> -->
                         </div>
                             </div>
                         <div class="col-2 text-center">
@@ -76,7 +77,9 @@ $emp_id = $_GET['id'];
             if(isset($_GET['filter'])&& $_GET['filter'] !='' && $_GET['filter'] != NULL){
                 $filter_request = strtoupper($_GET['filter']);
               // $filter = "`start_date` > DATE_SUB(NOW(), INTERVAL 1 $filter_request)";
-                 $filter =  "`start_date` >= CURRENT_DATE AND start_date < CURRENT_DATE + INTERVAL 1 $filter_request";
+                //  $filter =  "`start_date` >= CURRENT_DATE AND start_date < CURRENT_DATE + INTERVAL 1 $filter_request";
+
+                $filter =  "`date_Created` >= CURRENT_DATE AND date_created < CURRENT_DATE + INTERVAL 1 $filter_request";
                 
             }
 
@@ -87,14 +90,16 @@ $emp_id = $_GET['id'];
                 $to = $_GET['to'];
                
 
-                $filter = " start_date >= '$from' AND start_date <= '$to'";
+                $filter = " `date_Created` >= '$from' AND `date_Created` <= '$to'";
             }else{
                 $msg = 'Please select the date range';
             }
 
+            
             if($filter){
             
                 $tasks = "SELECT * FROM `tbl_task` WHERE `emp_id` = '$emp_id' AND $filter";
+                
             }else{
                 $tasks = "SELECT * FROM `tbl_task` WHERE `emp_id` = '$emp_id'";
             }
@@ -109,20 +114,19 @@ $emp_id = $_GET['id'];
                     <div class="card text-center">
                         <div class="card-body">
                             <div class="mx-auto mb-4">
-                                <h4><?php echo $task['project_name'];?></h4>
+                                <h4><?php echo $task['client_name'];?></h4>
                             </div>
                             <h6><?php echo $task['description']?></h6>
-                            <b>Note : </b><?php echo $task['notes'];?>
+                            <b>Hours : </b><?php echo $task['hours'];?>
                             <br>
-                            <b>Start Time : </b><?php echo $task['start_date'];?>
+                            <b>Minutes: </b><?php echo $task['minutes'];?>
                             <br>
-                            <b>End Time : </b><?php echo $task['end_date'];?>
                             <br>
                             <br>
                             <?php
                                 
-                                $work_start_time = Carbon::parse($task['start_date']);
-                                $work_end_time = Carbon::parse($task['end_date']);
+                                $work_start_time = Carbon::parse($task['date_created']);
+                                $work_end_time = Carbon::parse($task['date_created']);
                                 $office_start_time = Carbon::parse('10:00 AM');
                                 $office_end_time = Carbon::parse('07:00 PM');
                                 $office_start = $work_start_time->max($office_start_time);
