@@ -94,8 +94,8 @@ $filter = false;
                                     <!-- ////Date range  -->
                                     <form action="" method="" class="d-flex justify-content-between gap-3">
                                         <input type="text" id="from" name="from" class="form-control"
-                                            placeholder="From Date">
-                                        <input type="text" id="to" name="to" class="form-control" placeholder="To Date">
+                                            placeholder="From Date" autocomplete="off">
+                                        <input type="text" id="to" name="to" class="form-control" placeholder="To Date" autocomplete="off">
                                         <button type="submit" class="btn btn-primary">Filter </button>
                                     </form>
 
@@ -198,6 +198,7 @@ if($filter){
                                     <thead>
                                         <tr>
                                             <!-- <th>S.No</th> -->
+                                            <th>Date</th>
                                             <th>Project Name</th>
                                             <th>Description</th>
                                             <th>Hours</th>
@@ -226,10 +227,11 @@ if($filter){
                                                 $msg = 'Please select the date range';  
                                             }
 
+                                            $curr_date =   date("Y-m-d");
                                             if($filter){
                                                 $sql= "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id AND $filter" ;
                                             }else{
-                                                $sql= "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id" ;
+                                                $sql= "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id AND date_created >= CURRENT_DATE AND date_created < CURRENT_DATE + INTERVAL 1 DAY" ;
                                             }
                                         $tasks = $db->select($sql);
                                         if($tasks):
@@ -240,6 +242,7 @@ if($filter){
                                             <!-- <td>
                                                 <?php echo $taskid  ?>
                                             </td> -->
+                                            <td><?php echo $task['date_created']?></td>
                                             <td>
                                                 <?php echo $task['client_name']  ?>
                                             </td>

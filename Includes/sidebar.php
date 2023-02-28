@@ -3,12 +3,12 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
 
-                <li>
+                <!-- <li>
                     <a href="index.php" class="waves-effect">
                         <i class="bx bx-home-circle"></i>
                         <span key="t-dashboards">Dashboards</span>
                     </a>
-                </li>
+                </li> -->
 
                 <?php if(is_admin()): ?>
                 <li>
