@@ -10,9 +10,11 @@ if (isset($_POST['email'])) {
     $password = $db->santize($_POST['password']);
     $sql = "SELECT * FROM tbl_employee WHERE emp_email = '$email' AND emp_pwd = '$password'";
    
-    $employee = $db->select($sql);
-    $employee = mysqli_fetch_array($employee);
-      if ($employee) {
+    $employee = $db->query($sql);
+    if(mysqli_num_rows($employee)>0)  {
+     
+        $employee = mysqli_fetch_array($employee);
+     
         $_SESSION['emp_id'] = $employee['id'];
         $_SESSION['name'] = $employee['emp_name'];
         $_SESSION['designation'] = $employee['emp_designation'];
@@ -27,11 +29,11 @@ if (isset($_POST['email'])) {
         } else {
             header("location: login.php");
         }
-        } else {
-            $msg = "Invalid email or password";
-        }
+        
+    } else {
+        $msg = "Invalid email or password";
     }
-   
+}
    
     
 ?>
