@@ -25,7 +25,7 @@ if (isset($_POST['email'])) {
         $_SESSION['emp_role'] = $employee['emp_role'];
 
         if (isset($_SESSION['email'])) {
-            header("location: index.php");
+            header("location: timesheet.php");
         } else {
             header("location: login.php");
         }

@@ -227,7 +227,7 @@ if($filter){
                                                 $msg = 'Please select the date range';  
                                             }
 
-                                            $curr_date =   date("Y-m-d");
+                                          
                                             if($filter){
                                                 $sql= "SELECT * FROM tbl_task  WHERE  emp_id = $emp_id AND $filter" ;
                                             }else{
