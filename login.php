@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'config.php';
 include 'includes/DB.php';
 $msg = false;
 $db = new DB();
@@ -22,7 +23,7 @@ if (isset($_POST['email'])) {
         $_SESSION['emp_role'] = $employee['emp_role'];
 
         if (isset($_SESSION['email'])) {
-            header("location: timesheet.php");
+            header("location: index.php");
         } else {
             header("location: login.php");
         }
@@ -82,6 +83,7 @@ if (isset($_POST['email'])) {
                             </div>
                             <div class="form-input">
                                 <button type="submit" class="btn btn-primary btn-block btn-lg w-100">Login</button>
+                                <a href="<?php echo $google_client->createAuthUrl()?>" class="btn btn-danger btn-block btn-lg w-100 mt-3">Login With Google</a>
                             </div>
                         </div>
                     </form>
