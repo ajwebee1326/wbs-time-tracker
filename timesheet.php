@@ -129,7 +129,7 @@ $filter = false;
                                     $production_hours = $db->select($sql);
                                     $prhours = mysqli_fetch_array($production_hours);
                                 } else {
-                                    $sql = "SELECT SUM(hours) as hours, SUM(minutes) as mm FROM `tbl_task` WHERE emp_id = $emp_id";
+                                    $sql = "SELECT SUM(hours) as hours, SUM(minutes) as mm FROM `tbl_task` WHERE emp_id = $emp_id AND date_created >= CURRENT_DATE AND date_created < CURRENT_DATE + INTERVAL 1 DAY";
                                     $production_hours = $db->select($sql);
                                     $prhours = mysqli_fetch_array($production_hours);
                                 }
@@ -306,6 +306,8 @@ $filter = false;
             }, function(data) {
                 data = JSON.parse(data);
                 if (data.code == 1) {
+                    $('#add_task_message').removeClass('alert-danger d-none').addClass('alert-success');
+                    $('#add_task_message .message').html("Task Deleted successfully");
                     $('#task_' + id).hide('slow');
                 } else {
                     alert('Something went wrong');
