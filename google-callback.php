@@ -42,7 +42,7 @@ if (isset($_GET["code"])) {
             $_SESSION['rm'] = $employee['emp_rm'];
             $_SESSION['emp_role'] = $employee['emp_role'];
 
-            header('Location: index.php');
+            header('Location: timesheet.php');
         }else{
             echo "Unauthorized Login";
         }
