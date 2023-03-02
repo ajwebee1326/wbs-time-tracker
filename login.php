@@ -2,40 +2,6 @@
 session_start();
 include 'config.php';
 include 'includes/DB.php';
-$msg = false;
-$db = new DB();
-if (isset($_POST['email'])) {
-
-    $email = $db->santize($_POST['email']);
-    $password = $db->santize($_POST['password']);
-    $sql = "SELECT * FROM tbl_employee WHERE emp_email = '$email' AND emp_pwd = '$password'";
-   
-    $employee = $db->query($sql);
-    if(mysqli_num_rows($employee)>0)  {
-     
-        $employee = mysqli_fetch_array($employee);
-     
-        $_SESSION['emp_id'] = $employee['id'];
-        $_SESSION['name'] = $employee['emp_name'];
-        $_SESSION['designation'] = $employee['emp_designation'];
-        $_SESSION['email'] = $employee['emp_email'];
-        $_SESSION['mobile'] = $employee['emp_mob'];
-        $_SESSION['dept'] = $employee['emp_dept'];
-        $_SESSION['rm'] = $employee['emp_rm'];
-        $_SESSION['emp_role'] = $employee['emp_role'];
-
-        if (isset($_SESSION['email'])) {
-            header("location: timesheet.php");
-        } else {
-            header("location: login.php");
-        }
-        
-    } else {
-        $msg = "Invalid email or password";
-    }
-}
-   
-    
 ?>
 
 <!doctype html>
@@ -49,7 +15,7 @@ if (isset($_POST['email'])) {
     <meta content="" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- <link rel="shortcut icon" href="assets/images/favicon.ico"> -->
     <!--  Style Css -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- Bootstrap Css -->
@@ -68,23 +34,11 @@ if (isset($_POST['email'])) {
                 <div class="col-lg-12">
                     <form method="post" action="">
                         <div class="admin-login">
-                            <?php if ($msg) : ?>
-                                <?php echo $msg; ?>
-                            <?php endif; ?>
+                           
                             <div class="form-title">
                                 <h4>Employee Login</h4>
                             </div>
-
                             <div class="form-input">
-                                <label for="email">Email</label>
-                                <input type="text" id="email" name="email" class="form-control">
-                            </div>
-                            <div class="form-input">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password" class="form-control" value="1234">
-                            </div>
-                            <div class="form-input">
-                                <button type="submit" class="btn btn-primary btn-block btn-lg w-100">Login</button>
                                 <a href="<?php echo $google_client->createAuthUrl()?>" class="btn btn-danger btn-block btn-lg w-100 mt-3">Login With Google</a>
                             </div>
                         </div>

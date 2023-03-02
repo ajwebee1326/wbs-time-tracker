@@ -36,6 +36,8 @@ session_start();
         <!-- toastr css -->
         <link rel="stylesheet" href="assets/libs/toastr/toastr.min.css">
 
+
+
     </head>
 
     <body data-sidebar="dark" data-layout-mode="light">
@@ -74,7 +76,13 @@ session_start();
                         </button>
                     </div>
 
-                    <h4 class="m-auto"><p class="mb-0">Welcome, <?php echo $_SESSION['name']?></p></h4>
+                    <h4 class="m-auto">
+                        <p class="mb-0 text-center">Welcome, 
+                        <?php echo $_SESSION['name']?>
+                        <br>
+                        <?php echo date('d-m-Y'); ?>
+                        </p>
+                    </h4>
                     <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

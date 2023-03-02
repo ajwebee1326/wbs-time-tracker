@@ -55,12 +55,11 @@ $filter = false;
 
                                     <!-- ////Date range  -->
                                     <form action="" method="" class="d-flex justify-content-between gap-3">
-                                        <input type="text" id="from" name="from" class="form-control"
-                                            placeholder="From Date" autocomplete="off">
-                                        <input type="text" id="to" name="to" class="form-control" placeholder="To Date"
-                                            autocomplete="off">
+                                        <input type="text" id="from" name="from" class="form-control" placeholder="From Date" autocomplete="off">
+                                        <input type="text" id="to" name="to" class="form-control" placeholder="To Date" autocomplete="off">
                                         <button type="submit" class="btn btn-primary">Filter </button>
                                     </form>
+                                <button class="btn btn-primary download">Download</button>
 
                                 </div>
                             </div>
@@ -75,9 +74,9 @@ $filter = false;
                         <div class="card">
                             <div class="card-body">
 
-                            <div id="add_task_message" class="alert alert-dismissable d-none">
-                                <div class="message"></div>
-                            </div>
+                                <div id="add_task_message" class="alert alert-dismissable d-none">
+                                    <div class="message"></div>
+                                </div>
                                 <form action="" method="POST" id="task_form">
                                     <div>
                                         <label for="">Client Name</label>
@@ -140,7 +139,7 @@ $filter = false;
 
                                 ?>
 
-                                <h5>Production Hours-
+                                <h5 class="text-center">Production Hours-
                                     <?php echo $prhours['hours']; ?> hrs
                                     <?php echo $prhours['mm'] ?> minutes
                                 </h5>
@@ -154,19 +153,15 @@ $filter = false;
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-body">
-                                <div id="task_message" class="alert alert-dismissable d-none">
-                                    <div class="message"></div>
-                                </div>
                                 <table id="emp_timesheet" class="table table-bordered dt-responsive w-100">
                                     <thead>
                                         <tr>
-                                            <!-- <th>S.No</th> -->
                                             <th>Date</th>
                                             <th>Project Name</th>
                                             <th>Description</th>
                                             <th>Hours</th>
                                             <th>Minutes</th>
-                                            <th>Actions</th>
+                                            <th class="noExl">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -219,7 +214,7 @@ $filter = false;
                                                         <?php echo $task['minutes']  ?>
                                                     </td>
                                                     <td>
-                                                        <button class="btn btn-secondary view_task"><span class="fa fa-eye"></span></button>
+                                                        <button class="btn btn-secondary view_task" data-task='<?php echo json_encode($task); ?>'><span class="fa fa-eye"></span></button>
                                                         <button class="btn btn-primary edit_task" data-task='<?php echo json_encode($task); ?>'><span class="fa fa-pencil"></span></button>
                                                         <button class="btn btn-danger" onclick="delete_task(<?php echo $task['id'] ?>)"><span class="fa fa-trash"></span> </button>
                                                     </td>
@@ -239,6 +234,24 @@ $filter = false;
         </div>
 
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="task_description_modal" tabindex="-1" role="dialog" aria-labelledby="task_description_modal" aria-hidden="true">
+        <div class="modal-dialog  modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="task_description_modal_title">Task Description</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="task_desc"> </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <?php include 'includes/footer.php'; ?>
@@ -278,13 +291,11 @@ $filter = false;
                     if (action == 'create_task') {
                         $('#emp_timesheet tbody').append(data.html);
                         console.log(data.html);
-                        
-                        $('#add_task_message').removeClass('alert-danger d-none').addClass('alert-success');
-                            $('#add_task_message .message').html("Task added successfully");
-                        setTimeout(function(){
+                        toastr.success('Task added successfully');
+                        setTimeout(function() {
                             location.reload();
                         }, 1e3);
-                       
+
                     } else {
                         $('#task_' + id).replaceWith(data.html);
                         $(".action_btn").html("Add");
@@ -306,8 +317,7 @@ $filter = false;
             }, function(data) {
                 data = JSON.parse(data);
                 if (data.code == 1) {
-                    $('#add_task_message').removeClass('alert-danger d-none').addClass('alert-success');
-                    $('#add_task_message .message').html("Task Deleted successfully");
+                    toastr.error('Task deleted successfully')
                     $('#task_' + id).hide('slow');
                 } else {
                     alert('Something went wrong');
@@ -328,4 +338,23 @@ $filter = false;
             $('#action').html('update_task');
             $(".action_btn").html("Update");
         });
+
+        $(document).on('click', '.view_task', function(e) {
+            e.preventDefault();
+            let task = $(this).data('task');
+            $('#task_description_modal').modal('show');
+            $('.task_desc').html(task.description);
+        });
+
+        $(".download").click(function() {
+            $("#emp_timesheet").table2excel({
+                exclude:".noExl",
+                name:"Worksheet Name",
+                filename:"SomeFile",
+                fileext:".xls"
+            });
+
+        });
+
+      
     </script>
