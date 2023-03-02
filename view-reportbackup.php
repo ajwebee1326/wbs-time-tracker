@@ -38,33 +38,39 @@ $emp_id = $_GET['id'];
         <div class="container-fluid">
             <!-- start page title -->
             <div class="row">
-                <div class="col-md-6">
-                    <h4 class="mb-sm-0 font-size-18">Task List</h4>
-                </div>
-                    <div class="col-md-6">
-                        <div class="d-flex gap-3">
-                            
-                                <a href="?id=<?php echo $emp_id ?>&filter=day"><button type="button" class="btn btn-primary"
-                                        <?php echo isset($_GET['filter']) && $_GET['filter']=='day' ? 'disabled' : ''
-                                        ?>><b>Today</b></button></a>
-                                <button class="btn btn-primary download">Download</button>
-                            <form action="" class="d-flex justify-content-between gap-3">
-                                    <input type="text" id="from" name="from" required class="form-control" placeholder="From Date"
-                                        autocomplete="off">
-                                    <input type="text" id="to" name="to" required class="form-control" placeholder="To Date"
-                                        autocomplete="off">
-                                    <input type="hidden" name="id" id="id" value="<?php echo $emp_id; ?>">
-                                    <button type="submit" class="btn btn-primary">Filter </button>
-                            </form>
+                <div class="col-12">
+                    <div class="col-md-6 page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18">Task List</h4>
+                        <div class="col-6 text-center">
+                            <!-- <a href="?id=<?php echo $emp_id ?>&filter"><button type="button" class="btn btn-primary"><b>All</b></button></a> -->
+                            <a href="?id=<?php echo $emp_id ?>&filter=day"><button type="button" class="btn btn-primary"
+                                    <?php echo isset($_GET['filter']) && $_GET['filter']=='day' ? 'disabled' : ''
+                                    ?>><b>Today</b></button></a>
+                            <button class="btn btn-primary download">Download</button>
                         </div>
                     </div>
+                    <?php if ($msg) : ?>
+                    <div class="text-center mb-3">
+                        <?php echo $msg; ?>
+                    </div>
+                    <?php endif; ?>
+                    <div class="col-md-6 mx-auto mt-3 text-center">
+                        <form action="" class="d-flex justify-content-between gap-3">
+                            <input type="text" id="from" name="from" required class="form-control" placeholder="From Date"
+                                autocomplete="off">
+                            <input type="text" id="to" name="to" required class="form-control" placeholder="To Date"
+                                autocomplete="off">
+                            <input type="hidden" name="id" id="id" value="<?php echo $emp_id; ?>">
+                            <button type="submit" class="btn btn-primary">Filter </button>
+                        </form>
+                    </div>
+                </div>
 
 
 
             </div>
         </div>
     </div>
-      
     <div class="row">
         <?php
             $filter = false;
