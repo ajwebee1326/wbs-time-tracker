@@ -28,9 +28,9 @@ if(isset($_POST['action']) && $_POST['action']=='create_task'){
                     <td>'.$hours.'</td>
                     <td>'.$minutes.'</td>
                     <td>
-                        <button class="btn btn-secondary view_task">View</button>
-                        <button class="btn btn-primary edit_task" data-task='. json_encode($task,true) .' >Edit</button>
-                        <a href="javascript:void(0)" class="btn btn-danger" onclick="delete_task('.$db->last_insert_id.')">Delete</a>
+                        <button class="btn btn-secondary view_task"><span class="fa fa-eye"></span></button>
+                        <button class="btn btn-primary edit_task" data-task='. json_encode($task,true) .' ><span class="fa fa-pencil"></span></button>
+                        <a href="javascript:void(0)" class="btn btn-danger" onclick="delete_task('.$db->last_insert_id.')"><span class="fa fa-trash"></span></a>
                     </td>
                 </tr>';
         $return_array =  array(
@@ -67,9 +67,9 @@ if(isset($_POST['action']) && $_POST['action']=='update_task'){
                     <td>'.$hours.'</td>
                     <td>'.$minutes.'</td>
                     <td>
-                        <button class="btn btn-secondary view_task">View</button>
-                        <button class="btn btn-primary edit_task" data-task='. json_encode($task,true) .' >Edit</button>
-                        <a href="javascript:void(0)" class="btn btn-danger" onclick="delete_task('.$id.')">Delete</a>
+                        <button class="btn btn-secondary view_task"><span class="fa fa-eye"></span></button>
+                        <button class="btn btn-primary edit_task" data-task='. json_encode($task,true) .' ><span class="fa fa-pencil"></span></button>
+                        <a href="javascript:void(0)" class="btn btn-danger" onclick="delete_task('.$id.')"><span class="fa fa-trash"></span></a>
                     </td>
                 </tr>';
         $return_array =  array(

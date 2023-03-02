@@ -30,14 +30,7 @@ $db = new DB();
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0 font-size-18">Employees</h4>
-                        <!-- <div class="col-4 text-center">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><b>+ Add New Project</b></button>
-                                </div> -->
-                        <form action="" method="" class="d-flex justify-content-between gap-3">
-                            <input type="text" id="from" name="from" class="form-control" placeholder="From Date" autocomplete="off">
-                            <input type="text" id="to" name="to" class="form-control" placeholder="To Date" autocomplete="off">
-                            <button type="submit" class="btn btn-primary">Filter </button>
-                        </form>
+                        
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">

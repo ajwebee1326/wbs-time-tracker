@@ -80,17 +80,17 @@ $filter = false;
                                 <form action="" method="POST" id="task_form">
                                     <div>
                                         <label for="">Client Name</label>
-                                        <input type="text" name="client_name" id="client_name" class="form-control" placeholder="Client Name"  autocomplete="off">
+                                        <input type="text" name="client_name" required id="client_name" class="form-control" placeholder="Client Name"  autocomplete="off">
                                     </div>
                                     <div class=" mt-2">
                                         <label for="">Task Description</label>
                                         <!-- <input type="text" name="description" id="description" class="form-control" placeholder="Description" -->
-                                        <textarea name="description" id="description" class="form-control" placeholder="Description"  autocomplete="off" ></textarea>
+                                        <textarea name="description" id="description" required class="form-control" placeholder="Description"  autocomplete="off" ></textarea>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <div class="mt-2">
                                             <label for="">Hours</label>
-                                            <input type="number" name="hours" id="hours" class="form-control" placeholder="Hours" maxlength="1">
+                                            <input type="number" name="hours" id="hours"  class="form-control" placeholder="Hours" maxlength="1">
                                         </div>
                                         <div class=" mt-2">
                                             <label for="">Minutes</label>
@@ -295,9 +295,13 @@ $filter = false;
                         toastr.success('Task added successfully');
                         setTimeout(function() {
                             location.reload();
-                        }, 1e3);
+                        }, 1000);
 
                     } else {
+                        toastr.success('Task updated successfully');
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000);
                         $('#task_' + id).replaceWith(data.html);
                         $(".action_btn").html("Add");
                     }
