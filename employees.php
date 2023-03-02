@@ -1,4 +1,7 @@
 <?php
+include 'vendor/autoload.php';
+
+use Carbon\Carbon;
 
 include 'includes/header.php';
 include 'includes/functions.php';
@@ -85,6 +88,8 @@ $db = new DB();
                                                     <?php
                                                     $emp_id = $employee['id'];
 
+                                                    $yesterday = Carbon::yesterday();
+                                                    $yesterday = $yesterday->format('Y-m-d');
 
                                                     $sql = "SELECT SUM(hours) as hours, SUM(minutes) as mm FROM `tbl_task` WHERE emp_id = $emp_id AND date_created >= CURRENT_DATE AND date_created < CURRENT_DATE + INTERVAL 1 DAY";
                                                     $production_hours = $db->select($sql);
@@ -92,11 +97,22 @@ $db = new DB();
 
                                                     $prhours['hours'] = floor($prhours['hours'] + ($prhours['mm'] / 60));
                                                     $prhours['mm'] = $prhours['mm'] % 60;
+
+
+                                                    $check_yesterdays_task = "SELECT * FROM tbl_task WHERE emp_id = $emp_id AND date_created = '$yesterday'";
+                                                    $yesterdays_task = $db->query($check_yesterdays_task);
+                                                    $yesterdays_task = mysqli_num_rows($yesterdays_task);
+
                                                     ?>
 
                                                     <h5>
                                                         <?php echo $prhours['hours']; ?> :
-                                                        <?php echo $prhours['mm'] ?> 
+                                                        <?php echo $prhours['mm'] ?>
+                                                        <?php
+                                                        if($yesterdays_task == 0){
+                                                            echo '<span class="badge bg-danger">No entry for yesterday</span>';
+                                                        }
+                                                        ?> 
                                                     </h5>
 
                                                 </td>
