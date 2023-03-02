@@ -47,7 +47,7 @@ $emp_id = $_GET['id'];
                                 <a href="?id=<?php echo $emp_id ?>&filter=day"><button type="button" class="btn btn-primary"
                                         <?php echo isset($_GET['filter']) && $_GET['filter']=='day' ? 'disabled' : ''
                                         ?>><b>Today</b></button></a>
-                                <button class="btn btn-primary download">Download</button>
+                               
                             <form action="" class="d-flex justify-content-between gap-3">
                                     <input type="text" id="from" name="from" required class="form-control" placeholder="From Date"
                                         autocomplete="off">
@@ -56,6 +56,7 @@ $emp_id = $_GET['id'];
                                     <input type="hidden" name="id" id="id" value="<?php echo $emp_id; ?>">
                                     <button type="submit" class="btn btn-primary">Filter </button>
                             </form>
+                            <button class="btn btn-primary download">Download</button>
                         </div>
                     </div>
 
