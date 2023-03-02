@@ -55,8 +55,8 @@ $filter = false;
 
                                     <!-- ////Date range  -->
                                     <form action="" method="" class="d-flex justify-content-between gap-3">
-                                        <input type="text" id="from" name="from" class="form-control" placeholder="From Date" autocomplete="off">
-                                        <input type="text" id="to" name="to" class="form-control" placeholder="To Date" autocomplete="off">
+                                        <input type="text" id="from" name="from"  required class="form-control" placeholder="From Date" autocomplete="off">
+                                        <input type="text" id="to" name="to" required class="form-control" placeholder="To Date" autocomplete="off">
                                         <button type="submit" class="btn btn-primary">Filter </button>
                                     </form>
                                 <button class="btn btn-primary download">Download</button>
@@ -90,11 +90,11 @@ $filter = false;
                                     <div class="d-flex justify-content-between">
                                         <div class="mt-2">
                                             <label for="">Hours</label>
-                                            <input type="number" name="hours" id="hours"  class="form-control" placeholder="Hours" maxlength="1">
+                                            <input type="number" name="hours" id="hours" required   class="form-control" placeholder="Hours" maxlength="1">
                                         </div>
                                         <div class=" mt-2">
                                             <label for="">Minutes</label>
-                                            <input type="number" name="minutes" id="minutes" class="form-control" placeholder="Minutes" maxlength="2">
+                                            <input type="number" name="minutes" id="minutes" required class="form-control" placeholder="Minutes" maxlength="2">
                                         </div>
                                     </div>
                                     <input type="hidden" name="action" id="action" value="create_task">

@@ -39,37 +39,40 @@ $emp_id = $_GET['id'];
             <!-- start page title -->
             <div class="row">
                 <div class="col-12">
-                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <div class="col-md-6 page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0 font-size-18">Task List</h4>
                         <div class="col-6 text-center">
-                            <a href="?id=<?php echo $emp_id ?>&filter"><button type="button" class="btn btn-primary"><b>All</b></button></a>
-                            <a href="?id=<?php echo $emp_id ?>&filter=day"><button type="button" class="btn btn-primary" <?php echo isset($_GET['filter']) && $_GET['filter'] == 'day' ? 'disabled' : '' ?>><b>Today</b></button></a>
+                            <!-- <a href="?id=<?php echo $emp_id ?>&filter"><button type="button" class="btn btn-primary"><b>All</b></button></a> -->
+                            <a href="?id=<?php echo $emp_id ?>&filter=day"><button type="button" class="btn btn-primary"
+                                    <?php echo isset($_GET['filter']) && $_GET['filter']=='day' ? 'disabled' : ''
+                                    ?>><b>Today</b></button></a>
                             <button class="btn btn-primary download">Download</button>
                         </div>
-                        <?php if ($msg) : ?>
-                            <div class="text-center mb-3"><?php echo $msg; ?></div>
-                        <?php endif; ?>
-                        <div class="col-md-6 mx-auto mt-3 text-center">
-                            <form action="" class="d-flex justify-content-between gap-3">
-                                <input type="text" id="from" name="from" class="form-control" placeholder="From Date" autocomplete="off">
-                                <input type="text" id="to" name="to" class="form-control" placeholder="To Date" autocomplete="off">
-                                <input type="hidden" name="id" id="id" value="<?php echo $emp_id; ?>">
-                                <button type="submit" class="btn btn-primary">Filter </button>
-                            </form>
-                        </div>
                     </div>
-
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item active">Task List</li>
-                        </ol>
+                    <?php if ($msg) : ?>
+                    <div class="text-center mb-3">
+                        <?php echo $msg; ?>
                     </div>
-
+                    <?php endif; ?>
+                    <div class="col-md-6 mx-auto mt-3 text-center">
+                        <form action="" class="d-flex justify-content-between gap-3">
+                            <input type="text" id="from" name="from" required class="form-control" placeholder="From Date"
+                                autocomplete="off">
+                            <input type="text" id="to" name="to" required class="form-control" placeholder="To Date"
+                                autocomplete="off">
+                            <input type="hidden" name="id" id="id" value="<?php echo $emp_id; ?>">
+                            <button type="submit" class="btn btn-primary">Filter </button>
+                        </form>
+                    </div>
                 </div>
+
+
+
             </div>
         </div>
-        <div class="row">
-            <?php
+    </div>
+    <div class="row">
+        <?php
             $filter = false;
 
             if (isset($_GET['filter']) && $_GET['filter'] != '' && $_GET['filter'] != NULL) {
@@ -77,16 +80,13 @@ $emp_id = $_GET['id'];
                 $filter = " date_created >= CURRENT_DATE AND date_created < CURRENT_DATE + INTERVAL 1 DAY";
             }
 
-
             if (isset($_GET['from']) && $_GET['from'] != '' && $_GET['from'] != null && isset($_GET['to']) && $_GET['to'] != '' && $_GET['to'] != null) {
                 $from = $_GET['from'];
                 $to = $_GET['to'];
-
                 $filter = " date_created >= '$from' AND date_created <= '$to'";
             } else {
                 $msg = 'Please select the date range';
             }
-
 
             if ($filter) {
 
@@ -96,65 +96,64 @@ $emp_id = $_GET['id'];
             }
 
             $tasks = $db->query($tasks); ?>
+            
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="task_message" class="alert alert-dismissable d-none">
+                                <div class="message"></div>
+                            </div>
+                            <table id="emp_view_report" class="table table-bordered dt-responsive w-100">
+                                <thead>
+                                    <tr>
+                                        <!-- <th>S.No</th> -->
+                                        <th>Date</th>
+                                        <th>Project Name</th>
+                                        <th>Description</th>
+                                        <th>Hours</th>
+                                        <th>Minutes</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if ($tasks) :
+                                            while ($task = $tasks->fetch_assoc()) {
+                                        ?>
 
 
+                                    <tr>
 
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="task_message" class="alert alert-dismissable d-none">
-                            <div class="message"></div>
+
+                                        <td>
+                                            <?php echo $task['date_created'] ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $task['client_name']  ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $task['description']  ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $task['hours']  ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $task['minutes']  ?>
+                                        </td>
+
+                                    </tr>
+
+                                    <?php  }
+                                        endif;  ?>
+                                </tbody>
+                            </table>
+
                         </div>
-                        <table id="emp_view_report" class="table table-bordered dt-responsive w-100">
-                            <thead>
-                                <tr>
-                                    <!-- <th>S.No</th> -->
-                                    <th>Date</th>
-                                    <th>Project Name</th>
-                                    <th>Description</th>
-                                    <th>Hours</th>
-                                    <th>Minutes</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if ($tasks) :
-                                    while ($task = $tasks->fetch_assoc()) {
-                                ?>
-
-
-                                        <tr>
-
-
-                                            <td><?php echo $task['date_created'] ?></td>
-                                            <td>
-                                                <?php echo $task['client_name']  ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $task['description']  ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $task['hours']  ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $task['minutes']  ?>
-                                            </td>
-
-                                        </tr>
-
-                                <?php  }
-                                endif;  ?>
-                            </tbody>
-                        </table>
-
                     </div>
                 </div>
-            </div>
-
-        </div>
+            
     </div>
 </div>
-</div>
+
 <?php
 $employee = $db->query("SELECT * FROM `tbl_employee` WHERE `id` = '$emp_id'");
 $employee = $employee->fetch_assoc();
@@ -166,7 +165,7 @@ include 'includes/footer.php';
 
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#emp_view_report').DataTable();
 
         $.datepicker.setDefaults({
@@ -179,7 +178,7 @@ include 'includes/footer.php';
 
     });
 
-    $(".download").click(function() {
+    $(".download").click(function () {
         $("#emp_view_report").table2excel({
             exclude: ".noExl",
             name: "Worksheet Name",

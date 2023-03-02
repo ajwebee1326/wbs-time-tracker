@@ -12,7 +12,7 @@ session_start();
         <meta content="" name="description" />
         <meta content="Themesbrand" name="author" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <link rel="shortcut icon" href="assets/images/Faviconwebee.png">
          <!--  Style Css -->
          <link rel="stylesheet" href="assets/css/style.css">
         <!-- Bootstrap Css -->
@@ -79,24 +79,24 @@ session_start();
                     <h4 class="m-auto">
                         <p class="mb-0 text-center">Welcome, 
                         <?php echo $_SESSION['name']?>
+                        ( <?php  echo $_SESSION['dept']?> )
                         <br>
                         <?php echo date('d-m-Y'); ?>
                         </p>
                     </h4>
-                    <div class="dropdown d-inline-block">
-                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
-                              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class='bx bx-cog' ></i>
-                                <span class="d-none d-xl-inline-block ms-1" key="t-henry"></span>
-                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item text-danger" href="logout.php"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Logout</span></a>
-                            </div>
-                    </div>
+                    <a href="logout.php" class="waves-effect" id="btn-logout">
+                        <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
+                        <span key="t-chat">Logout</span>
+                    </a>
                 </div>
             </header>
 
-           
+          
+            
+<style>
+#btn-logout{
+    color: red;
+}
 
+</style>
            
