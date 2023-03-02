@@ -80,12 +80,12 @@ $filter = false;
                                 <form action="" method="POST" id="task_form">
                                     <div>
                                         <label for="">Client Name</label>
-                                        <input type="text" name="client_name" id="client_name" class="form-control" placeholder="Client Name">
+                                        <input type="text" name="client_name" id="client_name" class="form-control" placeholder="Client Name"  autocomplete="off">
                                     </div>
                                     <div class=" mt-2">
                                         <label for="">Task Description</label>
                                         <!-- <input type="text" name="description" id="description" class="form-control" placeholder="Description" -->
-                                        <textarea name="description" id="description" class="form-control" placeholder="Description"></textarea>
+                                        <textarea name="description" id="description" class="form-control" placeholder="Description"  autocomplete="off" ></textarea>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <div class="mt-2">
@@ -125,6 +125,7 @@ $filter = false;
 
 
                                     $sql = "SELECT SUM(hours) as hours, SUM(minutes) as mm FROM `tbl_task` WHERE emp_id = $emp_id AND $filter";
+                    
                                     $production_hours = $db->select($sql);
                                     $prhours = mysqli_fetch_array($production_hours);
                                 } else {

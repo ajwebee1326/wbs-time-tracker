@@ -51,16 +51,15 @@ $emp_id = $_GET['id'];
                             <div class="text-center mb-3"><?php echo $msg; ?></div>
                         <?php endif; ?>
                         <div class="col-md-6 mx-auto mt-3 text-center">
-                            <!-- <form action="" class="d-flex justify-content-between gap-3" >
-                                <input type="text" id="from" name="from" class="form-control" placeholder="From Date">
-                                <input type="text" id="to" name="to" class= "form-control" placeholder ="To Date">
+                            <form action="" class="d-flex justify-content-between gap-3" >
+                                <input type="text" id="from" name="from" class="form-control" placeholder="From Date" autocomplete="off">
+                                <input type="text" id="to" name="to" class= "form-control" placeholder ="To Date" autocomplete="off">
+                                <input type="hidden" name="id" id="id" value="<?php echo $emp_id; ?>">
                                 <button type="submit" class="btn btn-primary">Filter </button>
-                            </form> -->
+                            </form>
                         </div>
                             </div>
-                        <div class="col-2 text-center">
-                            Total Hours : 12 Hours
-                        </div>
+                        
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item active">Task List</li>
@@ -76,21 +75,16 @@ $emp_id = $_GET['id'];
 
             if(isset($_GET['filter'])&& $_GET['filter'] !='' && $_GET['filter'] != NULL){
                 $filter_request = strtoupper($_GET['filter']);
-              // $filter = "`start_date` > DATE_SUB(NOW(), INTERVAL 1 $filter_request)";
-                //  $filter =  "`start_date` >= CURRENT_DATE AND start_date < CURRENT_DATE + INTERVAL 1 $filter_request";
-
-                $filter =  "`date_Created` >= CURRENT_DATE AND date_created < CURRENT_DATE + INTERVAL 1 $filter_request";
+                $filter = "`date_created` > DATE_SUB(NOW(), INTERVAL 1 $filter_req)";
                 
             }
 
  
             if(isset($_GET['from'])&& $_GET['from'] != '' && $_GET['from'] != null && isset($_GET['to']) && $_GET['to'] !='' && $_GET['to'] !=null){
-                
                 $from = $_GET['from'];
                 $to = $_GET['to'];
                
-
-                $filter = " `date_Created` >= '$from' AND `date_Created` <= '$to'";
+                $filter = " date_created >= '$from' AND date_created <= '$to'";
             }else{
                 $msg = 'Please select the date range';
             }
@@ -99,18 +93,68 @@ $emp_id = $_GET['id'];
             if($filter){
             
                 $tasks = "SELECT * FROM `tbl_task` WHERE `emp_id` = '$emp_id' AND $filter";
-                
+
             }else{
-                $tasks = "SELECT * FROM `tbl_task` WHERE `emp_id` = '$emp_id'";
+                $tasks = "SELECT * FROM `tbl_task` WHERE `emp_id` = '$emp_id' AND date_created >= CURRENT_DATE AND date_created < CURRENT_DATE + INTERVAL 1 DAY";
+          
             }
            
-                $tasks = $db->query($tasks);
-                $i = 1;
+                $tasks = $db->query($tasks); ?>
+                
 
-                if($tasks):
+               
+                                <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="task_message" class="alert alert-dismissable d-none">
+                                    <div class="message"></div>
+                                </div>
+                                <table id="emp_view_report" class="table table-bordered dt-responsive w-100">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th>S.No</th> -->
+                                            <th>Date</th>
+                                            <th>Project Name</th>
+                                            <th>Description</th>
+                                            <th>Hours</th>
+                                            <th>Minutes</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody> 
+                                        <?php if($tasks):
                 while($task = $tasks->fetch_assoc()){
             ?>
-                <div class="col-xl-3 col-sm-3">
+
+                                       
+                                                <tr>
+
+                                                    
+                                                    <td><?php echo $task['date_created'] ?></td>
+                                                    <td>
+                                                        <?php echo $task['client_name']  ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $task['description']  ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $task['hours']  ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $task['minutes']  ?>
+                                                    </td>
+                                                   
+                                                </tr>
+
+                                        <?php  }
+                                        endif;  ?>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                <!-- <div class="col-xl-3 col-sm-3">
                     <div class="card text-center">
                         <div class="card-body">
                             <div class="mx-auto mb-4">
@@ -135,22 +179,10 @@ $emp_id = $_GET['id'];
                                 // echo "Hours worked during office hours: <b>{$hours_worked} hours</b>";
                             ?>
                         </div>
-                        <!-- <div class="card-footer bg-transparent border-top">
-                            <div class="contact-links d-flex font-size-20">
-                                <div class="flex-fill">
-                                    <a href="http://localhost/wbs/webeesite/slide/edit/1"><i class="bx bx-edit"></i></a>
-                                </div>
-                                <div class="flex-fill">
-                                    <a href="http://localhost/wbs/webeesite/slide/delete/1"><i class="bx bx-trash-alt "></i></a>
-                                </div>
-                                <div class="flex-fill" title="Status">
-                                    <a href="http://localhost/wbs/webeesite/slide/change_status/1/0"><button class="btn btn-danger btn-sm">Deactivate</button></a>
-                                </div>
-                            </div>
-                        </div> -->
+                       
                     </div>
-                </div>
-            <?php } endif; ?>
+                </div> -->
+
 
             </div>
         </div>
@@ -163,14 +195,18 @@ include 'includes/footer.php';
 
 
 <script>
-    $('#emp_timesheet').DataTable();
+
+$(document).ready(function() {
+    $('#emp_view_report').DataTable();
 
     $.datepicker.setDefaults({
-                    dateFormat: 'yy-mm-dd',
-                    showButtonPanel: true
-                });
+            dateFormat: 'yy-mm-dd',
+            showButtonPanel: true
+        });
 
-                $('#from').datepicker();
-                $('#to').datepicker();
+        $('#from').datepicker();
+        $('#to').datepicker();
+
+});
                
 </script>
